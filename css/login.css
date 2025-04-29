@@ -1,0 +1,119 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em 2em;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.containerLogo {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+}
+
+.navbar_title {
+    font-size: var(--sizeSubtitle);
+    font-weight: var(--weightBold);
+    color: var(--colorTitle);
+}
+
+.container {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+
+.navbar_button {
+    padding: .5em 1em;
+    background-color: var(--colorEnfasis);
+    color: var(--colorWhite);
+    border-radius: 4px;
+    font-weight: var(--weightRegular);
+    transition-duration: .3s;
+    transition-property: scale;
+    text-align: center;
+}
+
+.navbar_button:hover {
+    scale: 1.03;
+}
+
+.navbar_button--background {
+    background-color: var(--colorBackground);
+    color: var(--colorText);
+    border: 1px solid rgba(128, 128, 128, 0.256);
+}
+
+.sectionLogin {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3em 1em;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+}
+
+.sectionLogin_title {
+    text-align: center;
+    font-size: var(--sizeTitle);
+    font-weight: var(--weightBold);
+    color: var(--colorTitle);
+}
+
+.sectionLogin_parraf {
+    text-align: center;
+    color: var(--colorTextLow);
+}
+
+.formLogin {
+    background-color: var(--colorWhite);
+    padding: 3em;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(128, 128, 128, 0.256);
+    display: flex;
+    gap: 1.2em;
+    flex-direction: column;
+    max-width: 500px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.formLogin_label {
+    font-weight: var(--weightRegular);
+}
+
+.formLogin_input {
+    padding: 1em;
+    border-radius: 4px;
+    background-color: var(--colorBackground);
+    border: 1px solid rgba(128, 128, 128, 0.256);
+}
+
+.formLogin_submit {
+    background-color: var(--colorEnfasis);
+    padding: 1em;
+    color: var(--colorWhite);
+    border-radius: 4px;
+    transition-duration: .3s;
+    transition-property: scale;
+    font-weight: var(--weightRegular);
+}
+
+.formLogin_submit:hover {
+    scale: 1.02;
+}
+
+.formLogin_container {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    justify-content: center;
+}
+
+.formLogin_redirection {
+    color: var(--colorEnfasis);
+    font-weight: var(--weightRegular);
+}

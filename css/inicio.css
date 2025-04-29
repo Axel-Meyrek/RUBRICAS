@@ -1,0 +1,125 @@
+.inicio {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+}
+
+.inicio_title {
+    font-size: var(--sizeTitle);
+    font-weight: var(--weightBold);
+    color: var(--colorEnfasis);
+}
+
+.inicio_title span {
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+}
+
+.inicio_container {
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.inicio_card {
+    padding: 2em;
+    border-radius: 4px;
+    width: calc(33% - 1em);
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    border: 1px solid rgba(128, 128, 128, 0.256);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--colorWhite);
+}
+
+.inicio_card--large {
+    max-width: none;
+    width: calc(50% - 1em);
+}
+
+.card_title {
+    font-size: var(--sizeSubtitle);
+    font-weight: var(--weightRegular);
+}
+
+.card_subtitle {
+    color: var(--colorTextLow);
+}
+
+.card_data {
+    font-size: var(--sizeTitle);
+    font-weight: var(--weightBold);
+}
+
+.card_button {
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    border-radius: 4px;
+    color: var(--colorWhite);
+    background-color: var(--colorEnfasis);
+    font-weight: var(--weightRegular);
+    transition-duration: .3s;
+    transition-property: scale;
+}
+
+.card_button:hover {
+    scale: 1.01;
+}
+
+.card_button path {
+    fill: var(--colorWhite);
+}
+
+.card_button--color {
+    background-color: #D3D9EE;
+    color: var(--colorText);
+}
+
+.card_button--color path {
+    fill: var(--colorText);
+}
+
+.resumenRubrica {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em;
+    background-color: var(--colorBackground);
+    border: 1px solid rgba(128, 128, 128, 0.256);
+    border-radius: 4px;
+}
+
+.resumenRubrica_container {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+
+.resumenRubrica_name {
+    font-weight: var(--weightRegular);
+}
+
+.resumenRubrica_criterios {
+    color: var(--colorTextLow);
+}
+
+.resumenRubrica_button {
+    background-color: transparent;
+    padding: .5em 2em;
+    border-radius: 4px;
+    transition-duration: .3s;
+    transition-property: color, background-color, scale;
+    border: 1px solid rgba(128, 128, 128, 0.256);
+    font-weight: var(--weightRegular);
+}
+
+.resumenRubrica_button:hover {
+    background-color: var(--colorEnfasis);
+    color: var(--colorWhite);
+    scale: 1.05;
+}

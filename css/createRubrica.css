@@ -1,0 +1,136 @@
+.createRubrica {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+}
+
+.createRubrica_title {
+    font-size: var(--sizeTitle);
+    font-weight: var(--weightBold);
+    color: var(--colorEnfasis);
+}
+
+.createRubrica_container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 2em;
+    background-color: var(--colorWhite);
+    border-radius: 4px;
+    border: 1px solid rgba(128, 128, 128, 0.256);
+}
+
+.createRubrica_subtitle {
+    font-size: var(--sizeSubtitle);
+    font-weight: var(--weightRegular);
+    margin-bottom: 1em;
+}
+
+.createRubrica_label {
+    font-weight: var(--weightRegular);
+    color: var(--colorTextLow);
+}
+
+.createRubrica_input {
+    padding: 1em;
+    background-color: var(--colorBackground);
+    border-radius: 4px;
+    border: 1px solid rgba(128, 128, 128, 0.256);
+}
+
+.createRubrica_flex {
+    display: flex;
+    gap: 1em;
+    justify-content: end;
+    align-items: center;
+}
+
+.createRubrica_addCriterio, .createRubrica_saveCriterio {
+    display: flex;
+    align-items: center;
+    padding: .5em 2em;
+    border-radius: 4px;
+    background-color: var(--colorBackground);
+    display: flex;
+    align-items: center;
+    font-weight: var(--weightRegular);
+    border: 1px solid rgba(128, 128, 128, 0.256);
+    transition-duration: .3s;
+    transition-property: background-color, color, scale;
+
+    & path {
+        transition-duration: .3s;
+        transition-property: fill;
+    }
+}
+
+.createRubrica_addCriterio:hover {
+    background-color: var(--colorEnfasis);
+    color: var(--colorWhite);
+    scale: 1.01;
+    & path {
+        fill: var(--colorWhite);
+    }
+}
+
+.createRubrica_saveCriterio {
+    gap: .5em;
+    background-color: var(--colorEnfasis);
+    color: var(--colorWhite);
+
+    & path {
+        fill: var(--colorWhite);
+    }
+}
+
+.createRubrica_saveCriterio:hover {
+    scale: 1.02;
+}
+
+.containerCriterios {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+}
+
+.criterio {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    background-color: var(--colorBackground);
+    padding: 2em;
+    border-radius: 4px;
+    border: 1px solid rgba(128, 128, 128, 0.256);
+}
+
+.criterio_flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5em;
+}
+
+.criterio_title {
+    font-weight: var(--weightRegular);
+}
+
+.criterio_buttonDelete {
+    padding: .5em;
+    background-color: transparent;
+    transition-duration: .3s;
+    transition-property: background-color, scale;
+    border-radius: 4px;
+
+    & path {
+        transition-duration: .3s;
+        transition-property: fill;
+    }
+}
+
+.criterio_buttonDelete:hover {
+    background-color: var(--colorEnfasis);
+    scale: 1.01;
+    & path {
+        fill: var(--colorWhite);
+    }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "rubricas",
+  "version": "1.0.0",
+  "description": "Crear rubricas de una forma sencilla sin complicaciones y de una forma super sencilla",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "JavaScript",
+    "Vite",
+    "HTML",
+    "CSS"
+  ],
+  "author": "Axel Meyrek",
+  "license": "ISC"
+}
