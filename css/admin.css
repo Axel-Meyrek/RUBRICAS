@@ -12,6 +12,7 @@
     left: 0;
     bottom: 0;
     width: 100%;
+    z-index: 100;
 }
 
 .nav_item {
@@ -58,6 +59,7 @@
     align-items: center;
     justify-content: end;
     margin-left: 252px;
+    z-index: 100;
 }
 
 .header_container {
@@ -92,4 +94,5 @@
     margin-left: 250px;
     padding: 100px 3em;
     min-height: 100vh;
+    position: relative;
 }

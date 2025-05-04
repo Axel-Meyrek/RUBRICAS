@@ -31,6 +31,20 @@
     text-decoration: none;
 }
 
+::-webkit-scrollbar{
+    height: .01rem;
+    width: .01rem;
+}
+
+::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+ 
+ ::-webkit-scrollbar-thumb{
+    background-color: var(--colorPrincipal);
+    border-radius: 5rem;
+}
+
 body {
     background-color: var(--colorBackground);
 }
@@ -45,4 +59,24 @@ input {
 
 svg {
     fill: inherit;
+}
+
+.window {
+    transform: translateX(-100vw);
+    transition-duration: .5s;
+    transition-property: transform;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    margin-left: 250px;
+    padding: 100px 3em;
+    min-height: 100vh;
+    overflow-y: scroll;
+}
+
+.showWindow {
+    transform: translateX(0);
 }
