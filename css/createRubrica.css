@@ -7,7 +7,7 @@
 .createRubrica_title {
     font-size: var(--sizeTitle);
     font-weight: var(--weightBold);
-    color: var(--colorEnfasis);
+    color: var(--colorTitle);
 }
 
 .createRubrica_container {

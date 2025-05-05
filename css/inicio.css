@@ -7,7 +7,7 @@
 .inicio_title {
     font-size: var(--sizeTitle);
     font-weight: var(--weightBold);
-    color: var(--colorEnfasis);
+    color: var(--colorTitle);
 }
 
 .inicio_title span {

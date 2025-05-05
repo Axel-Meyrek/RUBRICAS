@@ -13,7 +13,7 @@
 .misRubricas_title {
     font-size: var(--sizeTitle);
     font-weight: var(--weightBold);
-    color: var(--colorEnfasis);
+    color: var(--colorTitle);
 }
 
 .misRubricas_button {

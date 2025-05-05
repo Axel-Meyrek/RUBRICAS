@@ -62,7 +62,7 @@ svg {
 }
 
 .window {
-    transform: translateX(-100vw);
+    transform: translateX(100vw);
     transition-duration: .5s;
     transition-property: transform;
     position: fixed;
