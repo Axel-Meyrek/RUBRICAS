@@ -38,8 +38,6 @@ const desactiveAllButtons = () => {
 
 /* EVENTOS */
 document.addEventListener('DOMContentLoaded', () => {
-    
-    hiddenAllWindows();
 
     addEventsButtons();
 });
