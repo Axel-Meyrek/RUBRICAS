@@ -1,0 +1,123 @@
+.misRubricas {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.misRubricas_container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.misRubricas_title {
+    font-size: var(--sizeTitle);
+    font-weight: var(--weightBold);
+    color: var(--colorEnfasis);
+}
+
+.misRubricas_button {
+    display: flex;
+    gap: .5em;
+    align-items: center;
+    background-color: var(--colorEnfasis);
+    padding: 1em 3em;
+    border-radius: 4px;
+    color: var(--colorWhite);
+    font-weight: var(--weightRegular);
+    transition-duration: .3s;
+    transition-property: scale;
+
+    & path {
+        color: var(--colorWhite);
+    }
+}
+
+.misRubricas_button:hover {
+    scale: 1.01;
+}
+
+.misRubricas_inpuSearch {
+    padding: 1em;
+    border-radius: 4px;
+    border: 1px solid rgba(128, 128, 128, 0.256);
+}
+
+.containerRubricas {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 3em 0;
+}
+
+.rubrica {
+    display: flex;
+    gap: 1em;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2em;
+    background-color: var(--colorWhite);
+    border-radius: 4px;
+    border: 1px solid rgba(128, 128, 128, 0.256);
+
+}
+
+.rubrica_container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.rubrica_name {
+    font-size: var(--sizeSubtitle);
+    font-weight: var(--weightRegular);
+}
+
+.rubrica_description {
+    color: var(--colorTextLow);
+}
+
+.rubrica_flex {
+    display: flex;
+    gap: 1em;
+}
+
+.rubrica_nunCriterios, .rubrica_fecha {
+    color: var(--colorTextLow);
+}
+
+.rubrica_containerButtons {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+
+.rubrica_button {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    padding: 1em 2em;
+    border-radius: 4px;
+    background-color: var(--colorBackground);
+    border: 1px solid rgba(128, 128, 128, 0.256);
+    transition-duration: .1s;
+    transition-property: background-color, color; 
+    color: var(--colorTextLow);
+
+    & path {
+        color: var(--colorTextLow);
+        transition-duration: .1s;
+        transition-property: color;
+    }
+}
+
+.rubrica_button:hover {
+    background-color: var(--colorEnfasis);
+    color: var(--colorWhite);
+    scale: 1.01;
+
+    & path {
+        color: var(--colorWhite);
+    }
+}
