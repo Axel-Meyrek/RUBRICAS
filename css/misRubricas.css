@@ -121,3 +121,8 @@
         color: var(--colorWhite);
     }
 }
+
+.rubrica_button--completar {
+    background-color: var(--colorEnfasis);
+    color: var(--colorWhite);
+}

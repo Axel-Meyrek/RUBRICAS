@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- METADATOS -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- STYLES -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/inicio.css">
+    <link rel="stylesheet" href="../css/misRubricas.css">
+    <!-- JAVASCRIPT -->
+     <script src="../js/utils.js" defer></script>
+    <!-- GENERAL -->
+    <title>Administrador - Rubricas</title>
+</head>
+<body>
+
+    <!-- NAVEGACION -->
+    <nav class="nav">
+        <button class="nav_item nav_item--active">
+            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 256 256"><path fill="currentColor" d="m217.9 110.1l-80-80a14 14 0 0 0-19.8 0l-80 80A13.92 13.92 0 0 0 34 120v96a6 6 0 0 0 6 6h64a6 6 0 0 0 6-6v-58h36v58a6 6 0 0 0 6 6h64a6 6 0 0 0 6-6v-96a13.92 13.92 0 0 0-4.1-9.9M210 210h-52v-58a6 6 0 0 0-6-6h-48a6 6 0 0 0-6 6v58H46v-90a2 2 0 0 1 .58-1.42l80-80a2 2 0 0 1 2.84 0l80 80A2 2 0 0 1 210 120Z"/></svg>
+            Inicio
+        </button>
+
+        <button class="nav_item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24"><path fill="currentColor" d="M10.5 13h-7c-.3 0-.5.2-.5.5v7c0 .3.2.5.5.5h7c.3 0 .5-.2.5-.5v-7c0-.3-.2-.5-.5-.5m-.5 7H4v-6h6zm.5-17h-7c-.3 0-.5.2-.5.5v7c0 .3.2.5.5.5h7c.3 0 .5-.2.5-.5v-7c0-.3-.2-.5-.5-.5m-.5 7H4V4h6zm10.5-7h-7c-.3 0-.5.2-.5.5v7c0 .3.2.5.5.5h7c.3 0 .5-.2.5-.5v-7c0-.3-.2-.5-.5-.5m-.5 7h-6V4h6zm.5 6.5h-3v-3c0-.3-.2-.5-.5-.5s-.5.2-.5.5v3h-3c-.3 0-.5.2-.5.5s.2.5.5.5h3v3c0 .3.2.5.5.5s.5-.2.5-.5v-3h3c.3 0 .5-.2.5-.5s-.2-.5-.5-.5"/></svg>
+            Completar Rubrica
+        </button>
+
+        <!-- <button class="nav_item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12.563 3.2h-1.126l-.645 2.578l-.647.2a6.3 6.3 0 0 0-1.091.452l-.599.317l-2.28-1.368l-.796.797l1.368 2.28l-.317.598a6.3 6.3 0 0 0-.453 1.091l-.199.647l-2.578.645v1.126l2.578.645l.2.647q.173.568.452 1.091l.317.599l-1.368 2.28l.797.796l2.28-1.368l.598.317q.523.278 1.091.453l.647.199l.645 2.578h1.126l.645-2.578l.647-.2a6.3 6.3 0 0 0 1.091-.452l.599-.317l2.28 1.368l.796-.797l-1.368-2.28l.317-.598q.278-.523.453-1.091l.199-.647l2.578-.645v-1.126l-2.578-.645l-.2-.647a6.3 6.3 0 0 0-.452-1.091l-.317-.599l1.368-2.28l-.797-.796l-2.28 1.368l-.598-.317a6.3 6.3 0 0 0-1.091-.453l-.647-.199zm2.945 2.17l1.833-1.1a1 1 0 0 1 1.221.15l1.018 1.018a1 1 0 0 1 .15 1.221l-1.1 1.833q.33.62.54 1.3l2.073.519a1 1 0 0 1 .757.97v1.438a1 1 0 0 1-.757.97l-2.073.519q-.21.68-.54 1.3l1.1 1.833a1 1 0 0 1-.15 1.221l-1.018 1.018a1 1 0 0 1-1.221.15l-1.833-1.1q-.62.33-1.3.54l-.519 2.073a1 1 0 0 1-.97.757h-1.438a1 1 0 0 1-.97-.757l-.519-2.073a7.5 7.5 0 0 1-1.3-.54l-1.833 1.1a1 1 0 0 1-1.221-.15L4.42 18.562a1 1 0 0 1-.15-1.221l1.1-1.833a7.5 7.5 0 0 1-.54-1.3l-2.073-.519A1 1 0 0 1 2 12.72v-1.438a1 1 0 0 1 .757-.97l2.073-.519q.21-.68.54-1.3L4.27 6.66a1 1 0 0 1 .15-1.221L5.438 4.42a1 1 0 0 1 1.221-.15l1.833 1.1q.62-.33 1.3-.54l.519-2.073A1 1 0 0 1 11.28 2h1.438a1 1 0 0 1 .97.757l.519 2.073q.68.21 1.3.54zM12 14.8a2.8 2.8 0 1 0 0-5.6a2.8 2.8 0 0 0 0 5.6m0 1.2a4 4 0 1 1 0-8a4 4 0 0 1 0 8"/></svg>
+            Configuración
+        </button>
+    </nav> -->
+
+
+
+
+    <!-- HEADER -->
+    <header class="header">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 10c0 2.21-1.79 4-4 4s-4-1.79-4-4s1.79-4 4-4s4 1.79 4 4"/><path fill="currentColor" fill-rule="evenodd" d="M12 24c6.63 0 12-5.37 12-12S18.63 0 12 0S0 5.37 0 12s5.37 12 12 12m6.27-2.96C21.13 19.05 23 15.75 23 12c0-6.08-4.92-11-11-11S1 5.92 1 12c0 3.75 1.87 7.05 4.73 9.04C6.435 19.72 8.71 16 12 16s5.56 3.72 6.27 5.04" clip-rule="evenodd"/></svg>
+        <div class="header_container">
+            <p class="header_userName">Regular User</p>
+            <p class="header_userLevel">Usuario</p>
+        </div>
+        <button class="header_LogOut">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5.616 20q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h6.403v1H5.616q-.231 0-.424.192T5 5.616v12.769q0 .23.192.423t.423.192h6.404v1zm10.846-4.461l-.702-.72l2.319-2.319H9.192v-1h8.887l-2.32-2.32l.702-.718L20 12z"/></svg>
+        </button>
+    </header>
+
+
+    <!-- El contenido se genera dinamicamente --> 
+    <main class="main"> 
+        <!-- HOME -->
+        <section id="Inicio" class="inicio window showWindow">
+            <h2 class="inicio_title">Bienvenido, <span>Regular User</span></h2>
+            <div class="inicio_container">
+                <!-- RUBRICAS DISPONIBLES -->
+                <article class="inicio_card">
+                    <h3 class="card_title">Rubricas Disponibles</h3>
+                    <p class="card_subtitle">Total de Rubricas en el sistema</p>
+                    <p class="card_data">2</p>
+                </article>
+                <!-- RUBRICAS COMPLETADAS -->
+                <article class="inicio_card">
+                    <h3 class="card_title">Rubricas Completadas</h3>
+                    <p class="card_subtitle">Evaluaciones Realizadas por ti</p>
+                    <p class="card_data">0</p>
+                </article>
+                <!-- RUBRICAS PENDIENTES -->
+                <article class="inicio_card">
+                    <h3 class="card_title">Rubricas Pendientes</h3>
+                    <p class="card_subtitle">Evaluaciones por realizar</p>
+                    <p class="card_data">2</p>
+                </article>
+                <!-- ACCIONES RAPIDAS -->
+                <article class="inicio_card inicio_card--large">
+                    <h3 class="card_title">Acciones Rapidas</h3>
+                    <p class="card_subtitle">Accede rápidamente a las funciones principales</p>
+                    <button class="card_button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="currentColor" d="M5.854 4.354a.5.5 0 1 0-.708-.708L3.5 5.293l-.646-.647a.5.5 0 1 0-.708.708l1 1a.5.5 0 0 0 .708 0zM8.5 5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zM8 15.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.854 9.854a.5.5 0 1 0-.708-.708L3.5 10.793l-.646-.647a.5.5 0 0 0-.708.708l1 1a.5.5 0 0 0 .708 0zm0 4.292a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708 0l-1-1a.5.5 0 0 1 .708-.708l.646.647l1.646-1.647a.5.5 0 0 1 .708 0"/></svg>
+                        Completar Rubrica
+                    </button>
+                    <button class="card_button card_button--color">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m21.29 5.89l-10 10a.996.996 0 0 1-1.41 0l-2.83-2.83a.996.996 0 1 1 1.41-1.41l2.12 2.12l9.29-9.29a.996.996 0 0 1 1.41 0c.4.39.4 1.02.01 1.41m-5.52-3.15c-1.69-.69-3.61-.93-5.61-.57c-4.07.73-7.32 4.01-8.01 8.08a10.01 10.01 0 0 0 11.19 11.66c3.96-.51 7.28-3.46 8.32-7.31c.4-1.47.44-2.89.21-4.22c-.13-.8-1.12-1.11-1.7-.54c-.23.23-.33.57-.27.89c.22 1.33.12 2.75-.52 4.26c-1.16 2.71-3.68 4.7-6.61 4.97c-5.1.47-9.33-3.85-8.7-8.98c.43-3.54 3.28-6.42 6.81-6.91c1.73-.24 3.37.09 4.77.81a1.003 1.003 0 0 0 .93-1.78c-.27-.12-.54-.25-.81-.36"/></svg>
+                        Ver mis evaluaciones
+                    </button>
+                </article>
+                <!-- RUBRICAS RECIENTES -->
+                <article class="inicio_card inicio_card--large">
+                    <h3 class="card_title">Rubricas Recientes</h3>
+                    <p class="card_subtitle">Últimas rúbricas agregadas al sistema</p>
+
+                    <!-- RUBRICA COMPONENTE -->
+                    <div class="resumenRubrica">
+                        <div class="resumenRubrica_container">
+                            <h4 class="resumenRubrica_name">Presentacion Oral</h4>
+                            <p class="resumenRubrica_criterios">3 Criterios</p>
+                        </div>
+                        <button class="resumenRubrica_button">Ver</button>
+                    </div>
+                    <!-- RUBRICA COMPONENTE -->
+                    <div class="resumenRubrica">
+                        <div class="resumenRubrica_container">
+                            <h4 class="resumenRubrica_name">Presentacion Oral</h4>
+                            <p class="resumenRubrica_criterios">3 Criterios</p>
+                        </div>
+                        <button class="resumenRubrica_button">Ver</button>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+
+        <!-- MIS RUBRICAS -->
+        <section id="CompletarRubrica" class="misRubricas window">
+            <div class="misRubricas_container">
+                <h2 class="misRubricas_title">Rubricas Disponibles</h2>
+            </div>
+
+            <input class="misRubricas_inpuSearch" type="text" placeholder="Buscar Rubricas...">
+
+            <div class="containerRubricas">
+                <!-- RUBRICA -->
+                <article class="rubrica">
+                    <div class="rubrica_container">
+                        <h3 class="rubrica_name">Presentacion Oral</h3>
+                        <p class="rubrica_description">Evaluación de presentación oral sobre tema libre</p>
+                        <div class="rubrica_flex">
+                            <p class="rubrica_nunCriterios">3 Criterios</p>
+                        </div>
+                    </div>
+                    
+                    <div class="rubrica_containerButtons">
+                        <button class="rubrica_button rubrica_button--completar">
+                            Completar
+                        </button>
+                    </div>
+                </article>
+                <!-- RUBRICA -->
+                <article class="rubrica">
+                    <div class="rubrica_container">
+                        <h3 class="rubrica_name">Presentacion Oral</h3>
+                        <p class="rubrica_description">Evaluación de presentación oral sobre tema libre</p>
+                        <div class="rubrica_flex">
+                            <p class="rubrica_nunCriterios">3 Criterios</p>
+                        </div>
+                    </div>
+                    
+                    <div class="rubrica_containerButtons">
+                        <button class="rubrica_button rubrica_button--completar">
+                            Completar
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
