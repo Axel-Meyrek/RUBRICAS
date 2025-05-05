@@ -25,7 +25,7 @@
     border-radius: 4px;
     color: var(--colorWhite);
     font-weight: var(--weightRegular);
-    transition-duration: .3s;
+    transition-duration: .1s;
     transition-property: scale;
 
     & path {

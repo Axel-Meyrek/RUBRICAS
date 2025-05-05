@@ -63,7 +63,7 @@
     color: var(--colorWhite);
     background-color: var(--colorEnfasis);
     font-weight: var(--weightRegular);
-    transition-duration: .3s;
+    transition-duration: .1s;
     transition-property: scale;
 }
 
@@ -112,7 +112,7 @@
     background-color: transparent;
     padding: .5em 2em;
     border-radius: 4px;
-    transition-duration: .3s;
+    transition-duration: .1s;
     transition-property: color, background-color, scale;
     border: 1px solid rgba(128, 128, 128, 0.256);
     font-weight: var(--weightRegular);

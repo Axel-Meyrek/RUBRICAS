@@ -23,7 +23,7 @@
     background-color: transparent;
     font-weight: var(--weightRegular);
     border-radius: 4px;
-    transition-duration: .3s;
+    transition-duration: .1s;
     transition-property: color, background-color, scale;
     color: var(--colorTextLow);
 }
@@ -72,11 +72,11 @@
     background-color: transparent;
     padding: .5em;
     border-radius: 4px;
-    transition-duration: .3s;
+    transition-duration: .1s;
     transition-property: background-color, scale;
 
     & path {
-        transition-duration: .3s;
+        transition-duration: .1s;
         transition-property: fill;
     }
 }
