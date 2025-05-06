@@ -1,6 +1,10 @@
 /* VARIABLES Y COMPONENTES */
 const buttonsNav = document.querySelectorAll('.nav_item');
 
+const $buttonMenu = document.querySelector('#buttonMenu');
+
+const $nav = document.querySelector('#nav');
+
 
 /* FUNCIONES */
 const hiddenAllWindows = () => {
@@ -12,6 +16,7 @@ const addEventsButtons = () => {
     buttonsNav.forEach(button => button.addEventListener('click', (e) => {
         desactiveAllButtons();
         activeButton(e);
+        desactiveMenu();
         const nombreVentana = button.childNodes[2].textContent.trim().replace(/ /g, "");
         showWindow(nombreVentana);
     }));
@@ -34,11 +39,19 @@ const desactiveAllButtons = () => {
     buttonsNav.forEach(button => button.classList.remove('nav_item--active'));
 }
 
+const activeAndDesactiveMenu = () => {
+    $nav.classList.toggle('nav--active');
+}
 
+const desactiveMenu = () => {
+    $nav.classList.remove('nav--active');
+}
 
 /* EVENTOS */
 document.addEventListener('DOMContentLoaded', () => {
 
     addEventsButtons();
 });
+
+$buttonMenu.addEventListener('click', activeAndDesactiveMenu);
 

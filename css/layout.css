@@ -13,6 +13,8 @@
     bottom: 0;
     width: 100%;
     z-index: 100;
+    transition-duration: .3s;
+    transition-property: transform;
 }
 
 .nav_item {
@@ -57,9 +59,23 @@
     display: flex;
     gap: 1em;
     align-items: center;
-    justify-content: end;
+    justify-content: space-between;
     margin-left: 252px;
     z-index: 100;
+}
+
+.buttonMenu {
+    background-color: transparent;
+    display: none;
+    & path {
+        color: var(--colorEnfasis)
+    }
+}
+
+.header_infoUser {
+    display: flex;
+    align-items: center;
+    gap: 1em;
 }
 
 .header_container {
@@ -95,4 +111,29 @@
     padding: 100px 3em;
     min-height: 100vh;
     position: relative;
+}
+
+
+@media (width < 880px) {
+    .nav {
+        transition-duration: .1s;
+        transform: translateX(-50vh);
+    }
+
+    .nav--active {
+        transform: translateX(0);
+    }
+
+    .window {
+        margin-left: 0;
+    }
+
+    .header {
+        margin-left: 0;
+    }
+
+    .buttonMenu {
+        display: block;
+    }
+    
 }
