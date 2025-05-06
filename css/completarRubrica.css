@@ -1,0 +1,112 @@
+.completarRubrica {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.completarRubrica_button {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    padding: 1em;
+    max-width: 200px;
+    border-radius: 4px;
+    background-color: transparent;
+    transition-duration: .1s;
+    transition-duration: color, scale, background-color;
+
+    & path {
+        transition-duration: .1s;
+        transition-property: color;
+    }
+}
+
+.completarRubrica_button:hover {
+    background-color: var(--colorEnfasis);
+    color: var(--colorWhite);
+    scale: 1.01;
+
+    & path {
+        color: var(--colorWhite);
+    }
+}
+
+.completarRubrica_title {
+    font-size: var(--sizeTitle);
+    font-weight: var(--weightBold);
+    color: var(--colorTitle);
+}
+
+.completarRubrica_description {
+    color: var(--colorTextLow);
+    margin-bottom: 3em;
+}
+
+.containerQuestions {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+}
+
+.question {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    padding: 3em;
+    background-color: var(--colorWhite);
+    border-radius: 4px;
+    border: 1px solid rgba(128, 128, 128, 0.256);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);;
+}
+
+.question_title {
+    font-size: var(--sizeSubtitle);
+    font-weight: var(--weightRegular);
+}
+
+.question_botonera {
+    display: flex;
+    gap: 1em;
+}
+
+.question_buttonCalification {
+    width: 100%;
+    padding: 1em;
+    border-radius: 4px;
+    border: 1px solid rgba(128, 128, 128, 0.256);
+    background-color: transparent;
+}
+
+.question_buttonCalification:hover {
+    scale: 1.01;
+}
+
+.question_buttonCalification--active {
+    background-color: var(--colorEnfasis);
+    color: var(--colorWhite);
+}
+
+.question_saveResponses {
+    margin-top: 3em;
+    display: flex;
+    gap: .5em;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    border-radius: 4px;
+    max-width: 200px;
+    font-weight: var(--weightRegular);
+    background-color: var(--colorEnfasis);
+    color: var(--colorWhite);
+    transition-duration: .1s;
+    transition-property: scale;
+    margin-left: auto;
+
+    & path {
+        color: var(--colorWhite);
+    }
+}
+
+.question_saveResponses:hover {
+    scale: 1.01;
+}

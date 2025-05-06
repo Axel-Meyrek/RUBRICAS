@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/inicio.css">
     <link rel="stylesheet" href="../css/misRubricas.css">
+    <link rel="stylesheet" href="../css/completarRubrica.css">
     <!-- JAVASCRIPT -->
      <script src="../js/utils.js" defer></script>
     <!-- GENERAL -->
@@ -53,7 +54,7 @@
     <!-- El contenido se genera dinamicamente --> 
     <main class="main"> 
         <!-- HOME -->
-        <section id="Inicio" class="inicio window showWindow">
+        <section id="Inicio" class="inicio window">
             <h2 class="inicio_title">Bienvenido, <span>Regular User</span></h2>
             <div class="inicio_container">
                 <!-- RUBRICAS DISPONIBLES -->
@@ -158,7 +159,44 @@
             </div>
         </section>
 
-    </main>
 
+        <section id="CompletarRubrica" class="completarRubrica window showWindow">
+            <button class="completarRubrica_button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 1024 1024"><path fill="currentColor" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64"/><path fill="currentColor" d="m237.248 512l265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312z"/></svg>
+                Volver a la lista
+            </button>
+            <h2 class="completarRubrica_title">Trabajo Escrito</h2>
+            <p class="completarRubrica_description">Evaluación de trabajo escrito académico</p>
+            
+            <div class="containerQuestions">
+                <!-- QUESTION -->
+                <article class="question">
+                    <h3 class="question_title">Criterio 1: Coherencia y cohesión</h3>
+                    <div class="question_botonera">
+                        <button class="question_buttonCalification">Debajo del estándar</button>
+                        <button class="question_buttonCalification">Acercándose al estándar</button>
+                        <button class="question_buttonCalification">En el estándar</button>
+                        <button class="question_buttonCalification">Sobre el estándar</button>
+                    </div>
+                </article>
+                <!-- QUESTION -->
+                <article class="question">
+                    <h3 class="question_title">Criterio 1: Coherencia y cohesión</h3>
+                    <div class="question_botonera">
+                        <button class="question_buttonCalification">Debajo del estándar</button>
+                        <button class="question_buttonCalification">Acercándose al estándar</button>
+                        <button class="question_buttonCalification">En el estándar</button>
+                        <button class="question_buttonCalification">Sobre el estándar</button>
+                    </div>
+                </article>
+            </div>
+
+            <button class="question_saveResponses">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20 7.423v10.962q0 .69-.462 1.153T18.384 20H5.616q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h10.961zm-1 .427L16.15 5H5.616q-.27 0-.443.173T5 5.616v12.769q0 .269.173.442t.443.173h12.769q.269 0 .442-.173t.173-.443zm-7 8.688q.827 0 1.414-.586T14 14.538t-.587-1.413T12 12.539t-1.413.586T10 14.538t.587 1.414t1.413.586M6.77 9.77h7.422v-3H6.77zM5 7.85V19V5z"/></svg>
+                Enviar Evaluación
+            </button>
+        </section>
+
+    </main>
 </body>
 </html>
