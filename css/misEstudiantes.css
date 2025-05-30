@@ -1,0 +1,83 @@
+.misEstudiantes {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.misEstudiantes_flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+.misEstudiantes_title {
+    color: var(--colorTitle);
+    font-weight: var(--weightBold);
+    font-size: var(--sizeTitle);
+}
+
+.misEstudiantes_botonera {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+
+.misEstudiantes_buttonAction {
+    padding: 1em;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.misEstudiantes_subtitle {
+    font-size: var(--sizeSubtitle);
+    font-weight: var(--weightRegular);
+    color: var(--colorTextLow);
+}
+
+.containerGrupos {
+    display: flex;
+    gap: 1em; 
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.grupo {
+    width: calc(33.3% - 1em);
+    padding: 1em;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.256);
+    transition-duration: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.containerEstudiantes {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.estudiante {
+    padding: 1em;
+    width: 100%;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.256);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.estudiante_botonera {
+    display: flex;
+    gap: 1em;
+}
+
+.estudiante_botonera .buttonCallToAction {
+    background-color: transparent;
+    color: var(--colorBlack);
+}
+
+.estudiante_botonera .rubrica_button {
+    border: none;
+    
+}

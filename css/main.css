@@ -81,3 +81,21 @@ svg {
 .showWindow {
     transform: translateX(0);
 }
+
+.buttonCallToAction {
+    display: flex;
+    gap: .5em;
+    align-items: center;
+    padding: 1em;
+    max-width: 200px;
+    border-radius: 4px;
+    background-color: var(--colorEnfasis);
+    color: var(--colorWhite);
+    transition-duration: .1s;
+    transition-duration: scale;
+    border: 1px solid rgba(128, 128, 128, 0.256);
+}
+
+.buttonCallToAction:hover {
+    scale: 1.03;
+}
