@@ -1,7 +1,7 @@
 .completarRubrica {
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 2em;
 }
 
 .completarRubrica_button {
@@ -31,6 +31,20 @@
     }
 }
 
+.completarRubrica_selectUser {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin: 2em 0em;
+}
+
+.selectUser_inputSelect {
+    padding: 1em;
+    border: none;
+    border-radius: 4px;
+    border: 1px solid rgba(128, 128, 128, 0.256);
+}
+
 .completarRubrica_title {
     font-size: var(--sizeTitle);
     font-weight: var(--weightBold);
@@ -39,7 +53,6 @@
 
 .completarRubrica_description {
     color: var(--colorTextLow);
-    margin-bottom: 3em;
 }
 
 .containerQuestions {
