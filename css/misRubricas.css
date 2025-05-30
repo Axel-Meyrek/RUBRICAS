@@ -122,6 +122,10 @@
     }
 }
 
+.rubrica_button--delete:hover {
+    background-color: var(--colorRed);
+}
+
 .rubrica_button--completar {
     background-color: var(--colorEnfasis);
     color: var(--colorWhite);
