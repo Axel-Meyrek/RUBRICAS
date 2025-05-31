@@ -63,26 +63,6 @@ svg {
     fill: inherit;
 }
 
-.window {
-    transform: translateX(100vw);
-    transition-duration: .5s;
-    transition-property: transform;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    margin-left: 250px;
-    padding: 100px 3em;
-    min-height: 100vh;
-    overflow-y: scroll;
-}
-
-.showWindow {
-    transform: translateX(0);
-}
-
 .buttonCallToAction {
     display: flex;
     gap: .5em;
