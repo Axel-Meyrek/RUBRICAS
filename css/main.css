@@ -85,7 +85,7 @@ svg {
 @media (width < 880px) {
     :root {
         --sizeTitle: 20px;
-        --sizeSubtitle: 16px;
-        --sizeParraf: 14px;
+        --sizeSubtitle: 14px;
+        --sizeParraf: 12px;
     }
 }
