@@ -133,3 +133,15 @@
         fill: var(--colorWhite);
     }
 }
+
+@media (width < 400px) {
+    .createRubrica_flex {
+        flex-wrap: wrap;
+    }
+
+    .createRubrica_addCriterio,
+    .createRubrica_saveCriterio {
+        width: 100%;
+        justify-content: center;
+    }
+}

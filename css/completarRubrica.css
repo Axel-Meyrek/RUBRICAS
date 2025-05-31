@@ -123,3 +123,14 @@
 .question_saveResponses:hover {
     scale: 1.01;
 }
+
+@media (width < 540px) {
+    .question_botonera {
+        flex-wrap: wrap;
+    }
+
+    .question_saveResponses {
+        width: 100%;
+        max-width: none;
+    }
+}

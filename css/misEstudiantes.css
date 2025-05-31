@@ -9,6 +9,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 1em;
+    flex-wrap: wrap;
 }
 
 .misEstudiantes_title {
@@ -79,5 +80,8 @@
 
 .estudiante_botonera .rubrica_button {
     border: none;
+}
+
+@media (width < 560px) {
     
 }

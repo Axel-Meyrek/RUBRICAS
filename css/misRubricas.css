@@ -60,7 +60,7 @@
     background-color: var(--colorWhite);
     border-radius: 4px;
     border: 1px solid rgba(128, 128, 128, 0.256);
-
+    flex-wrap: wrap;
 }
 
 .rubrica_container {
@@ -91,6 +91,7 @@
     display: flex;
     gap: 1em;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .rubrica_button {
@@ -129,4 +130,11 @@
 .rubrica_button--completar {
     background-color: var(--colorEnfasis);
     color: var(--colorWhite);
+}
+
+@media (width < 450px) {
+    .rubrica_button {
+        width: 100%;
+        justify-content: center;
+    }
 }

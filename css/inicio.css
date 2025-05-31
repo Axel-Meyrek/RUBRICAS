@@ -123,3 +123,9 @@
     color: var(--colorWhite);
     scale: 1.05;
 }
+
+@media (width < 620px) {
+    .inicio_card{
+        width: 100%;
+    }
+}
