@@ -1,5 +1,5 @@
 /* VARIABLES Y COMPONENTES */
-const buttonsNav = document.querySelectorAll('.nav_item');
+const buttonsNav = document.querySelectorAll('.buttonNavigate');
 
 const $buttonMenu = document.querySelector('#buttonMenu');
 
