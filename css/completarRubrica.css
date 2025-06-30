@@ -79,7 +79,18 @@
 
 .question_botonera {
     display: flex;
+    flex-direction: column;
     gap: 1em;
+}
+
+.question_flex {
+    display: flex;
+    gap: 1em;
+}
+
+.question_description {
+    padding: 1em;
+    line-height: 200%;
 }
 
 .question_buttonCalification {
