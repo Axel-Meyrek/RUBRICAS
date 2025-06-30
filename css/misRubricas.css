@@ -94,7 +94,7 @@
     flex-wrap: wrap;
 }
 
-.rubrica_button {
+.rubrica_button, .estudiante_buttonEvaluar {
     display: flex;
     align-items: center;
     gap: .5em;
@@ -113,7 +113,7 @@
     }
 }
 
-.rubrica_button:hover {
+.rubrica_button:hover, .estudiante_buttonEvaluar:hover {
     background-color: var(--colorEnfasis);
     color: var(--colorWhite);
     scale: 1.01;
