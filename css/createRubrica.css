@@ -139,13 +139,17 @@
     gap: 1em;
 }
 
-.createRubrica_textarea {
-    width: 70%;
+.createRubrica_textarea, .createRubrica_inputPorcentaje {
+    width: 80%;
     padding: 1em;
     background-color: var(--colorBackground);
     border-radius: 4px;
     border: 1px solid rgba(128, 128, 128, 0.256);
     outline: none;
+}
+
+.createRubrica_inputPorcentaje {
+    width: 20%;
 }
 
 .createRubrica_criterioPoint{
