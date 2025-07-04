@@ -3,30 +3,43 @@
 
     $params = json_decode(file_get_contents("php://input"), true);
 
-    $id_profesor = $params['id_profesor'];
+    $id = $params['id'];
     $password = $params['password'];
 
+    // 1. Verificar si es ADMINISTRADOR
 
-    // 1. Verificar credenciales del profesor
+    $queryAdmin = "SELECT id, nombre_completo, correo_electronico
+        FROM Administrador
+        WHERE id = '$id' AND password = '$password';";
 
-    $query = 
-        "SELECT id, nombre_completo, correo_electronico
+    $resultadoAdmin = mysqli_query($conexion, $queryAdmin);
+    $admin = mysqli_fetch_assoc($resultadoAdmin);
+
+    if ($admin) {
+        echo json_encode([
+            "tipo" => "administrador",
+            "usuario" => $admin
+        ]);
+        exit;
+    }
+
+    // 2. Verificar si es PROFESOR
+
+    $queryProf = "SELECT id, nombre_completo, correo_electronico
         FROM Profesores
-        WHERE id = '$id_profesor' AND password = '$password';";
+        WHERE id = '$id' AND password = '$password';";
 
-    $resultado = mysqli_query($conexion, $query);
-    $profesor = mysqli_fetch_assoc($resultado);
+    $resultadoProf = mysqli_query($conexion, $queryProf);
+    $profesor = mysqli_fetch_assoc($resultadoProf);
 
     if (!$profesor) {
         echo json_encode(["error" => "Credenciales incorrectas"]);
         exit;
     }
 
+    // 3. Obtener los grupos del profesor con su rúbrica asociada
 
-    // 2. Obtener grupos con su rúbrica asociada
-
-    $queryGrupos = 
-            "SELECT 
+    $queryGrupos = "SELECT 
             G.id AS grupo_id,
             G.nombre AS grupo_nombre,
             G.periodo,
@@ -35,7 +48,7 @@
             R.descripcion AS rubrica_descripcion
         FROM Grupos G
         LEFT JOIN Rubricas R ON G.id_rubrica = R.id
-        WHERE G.id_profesor = '$id_profesor'
+        WHERE G.id_profesor = '$id'
         ORDER BY G.id;";
 
     $resultadoGrupos = mysqli_query($conexion, $queryGrupos);
@@ -60,13 +73,9 @@
         $grupos[] = $grupo;
     }
 
-
-    // 3. Armar respuesta final con profesor + grupos
-
-    $response = [
-        "profesor" => $profesor,
+    echo json_encode([
+        "tipo" => "profesor",
+        "usuario" => $profesor,
         "grupos" => $grupos
-    ];
-
-    echo json_encode($response);
+    ]);
 ?>
