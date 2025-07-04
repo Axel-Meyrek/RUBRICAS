@@ -7,6 +7,8 @@
     <!-- STYLES -->
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/login.css">
+    <!-- SCRIPTS -->
+    <script src="../js/login.js" defer></script>
     <!-- GENERAL -->
     <title>Iniciar Sesion - Rubricas</title>
 </head>
@@ -28,13 +30,13 @@
         <p class="sectionLogin_parraf">Crea una nueva cuenta para comenzar</p>
 
         <form class="formLogin" action="#">
-            <label class="formLogin_label" for="">Correo Electronico</label>
-            <input class="formLogin_input" type="text" placeholder="Escribe tu Correo Electronico">
+            <label class="formLogin_label" for="">ID</label>
+            <input id="inputLoginID" class="formLogin_input" type="text" placeholder="Escribe tu ID">
 
             <label class="formLogin_label" for="">Contraseña</label>
-            <input class="formLogin_input" type="password" placeholder="Escribe tu Contraseña">
+            <input id="inputLoginPassword" class="formLogin_input" type="password" placeholder="Escribe tu Contraseña">
 
-            <button class="formLogin_submit">Iniciar Sesión</button>
+            <button id="buttonLogin" class="formLogin_submit">Iniciar Sesión</button>
             <div class="formLogin_container">
                 <p class="sectionLogin_parraf">¿No tienes una cuenta?</p>
                 <a class="formLogin_redirection" href="./register.html">Registrate</a>

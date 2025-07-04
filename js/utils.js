@@ -5,6 +5,8 @@ const $buttonMenu = document.querySelector('#buttonMenu');
 
 const $nav = document.querySelector('#nav');
 
+const $btnCerrarSesion = document.querySelector('#btnCerrarSesion');
+
 
 /* FUNCIONES */
 const hiddenAllWindows = () => {
@@ -47,6 +49,11 @@ const desactiveMenu = () => {
     $nav.classList.remove('nav--active');
 }
 
+const cerraSession = () => {
+    localStorage.removeItem('Sesion');
+    window.location.href = '../pages/login.html';
+}
+
 /* EVENTOS */
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -55,3 +62,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 $buttonMenu.addEventListener('click', activeAndDesactiveMenu);
 
+$btnCerrarSesion.addEventListener('click', cerraSession);
