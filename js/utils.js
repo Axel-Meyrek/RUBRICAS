@@ -27,13 +27,11 @@ const addEventsButtons = () => {
 const showWindow = (ventanaMostrar) => {
     hiddenAllWindows();
     const selector = '#' + ventanaMostrar;
-    console.log(selector)
     const $window = document.querySelector(selector);
     $window.classList.add('showWindow');
 }
 
 const activeButton = (e) => {
-    console.log(e.target)
     e.target.classList.add('nav_item--active');
 }
 

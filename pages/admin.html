@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <!-- JAVASCRIPT -->
     <script src="../js/utils.js" defer></script>
+    <script src="../js/admin.js" defer></script>
     <!-- GENERAL -->
     <title>Administrador - Rubricas</title>
 </head>
@@ -44,14 +45,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256"><path fill="currentColor" d="m225.9 58.31l-96-32a6 6 0 0 0-3.8 0l-96 32A6 6 0 0 0 26 64v80a6 6 0 0 0 12 0V72.32l38.68 12.9A62 62 0 0 0 99 174.75c-19.25 6.53-36 19.59-48 38a6 6 0 0 0 10 6.53C76.47 195.59 100.88 182 128 182s51.53 13.59 67 37.28a6 6 0 0 0 10-6.56c-12-18.38-28.73-31.44-48-38a62 62 0 0 0 22.27-89.53l46.63-15.5a6 6 0 0 0 0-11.38M178 120a50 50 0 1 1-89.37-30.8l37.47 12.49a6 6 0 0 0 3.8 0l37.47-12.49A49.78 49.78 0 0 1 178 120m-50-30.32L51 64l77-25.68L205 64Z"/></svg>
             Estudiantes y Grupos
         </button>
-
-        <button class="nav_item buttonNavigate">
-            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12.563 3.2h-1.126l-.645 2.578l-.647.2a6.3 6.3 0 0 0-1.091.452l-.599.317l-2.28-1.368l-.796.797l1.368 2.28l-.317.598a6.3 6.3 0 0 0-.453 1.091l-.199.647l-2.578.645v1.126l2.578.645l.2.647q.173.568.452 1.091l.317.599l-1.368 2.28l.797.796l2.28-1.368l.598.317q.523.278 1.091.453l.647.199l.645 2.578h1.126l.645-2.578l.647-.2a6.3 6.3 0 0 0 1.091-.452l.599-.317l2.28 1.368l.796-.797l-1.368-2.28l.317-.598q.278-.523.453-1.091l.199-.647l2.578-.645v-1.126l-2.578-.645l-.2-.647a6.3 6.3 0 0 0-.452-1.091l-.317-.599l1.368-2.28l-.797-.796l-2.28 1.368l-.598-.317a6.3 6.3 0 0 0-1.091-.453l-.647-.199zm2.945 2.17l1.833-1.1a1 1 0 0 1 1.221.15l1.018 1.018a1 1 0 0 1 .15 1.221l-1.1 1.833q.33.62.54 1.3l2.073.519a1 1 0 0 1 .757.97v1.438a1 1 0 0 1-.757.97l-2.073.519q-.21.68-.54 1.3l1.1 1.833a1 1 0 0 1-.15 1.221l-1.018 1.018a1 1 0 0 1-1.221.15l-1.833-1.1q-.62.33-1.3.54l-.519 2.073a1 1 0 0 1-.97.757h-1.438a1 1 0 0 1-.97-.757l-.519-2.073a7.5 7.5 0 0 1-1.3-.54l-1.833 1.1a1 1 0 0 1-1.221-.15L4.42 18.562a1 1 0 0 1-.15-1.221l1.1-1.833a7.5 7.5 0 0 1-.54-1.3l-2.073-.519A1 1 0 0 1 2 12.72v-1.438a1 1 0 0 1 .757-.97l2.073-.519q.21-.68.54-1.3L4.27 6.66a1 1 0 0 1 .15-1.221L5.438 4.42a1 1 0 0 1 1.221-.15l1.833 1.1q.62-.33 1.3-.54l.519-2.073A1 1 0 0 1 11.28 2h1.438a1 1 0 0 1 .97.757l.519 2.073q.68.21 1.3.54zM12 14.8a2.8 2.8 0 1 0 0-5.6a2.8 2.8 0 0 0 0 5.6m0 1.2a4 4 0 1 1 0-8a4 4 0 0 1 0 8"/></svg>
-            Completar Rubrica
-        </button>
     </nav>
-
-
 
 
     <!-- HEADER -->
@@ -64,8 +58,8 @@
         <div class="header_infoUser">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 10c0 2.21-1.79 4-4 4s-4-1.79-4-4s1.79-4 4-4s4 1.79 4 4"/><path fill="currentColor" fill-rule="evenodd" d="M12 24c6.63 0 12-5.37 12-12S18.63 0 12 0S0 5.37 0 12s5.37 12 12 12m6.27-2.96C21.13 19.05 23 15.75 23 12c0-6.08-4.92-11-11-11S1 5.92 1 12c0 3.75 1.87 7.05 4.73 9.04C6.435 19.72 8.71 16 12 16s5.56 3.72 6.27 5.04" clip-rule="evenodd"/></svg>
             <div class="header_container">
-                <p class="header_userName">Example Name</p>
-                <p class="header_mail">example@gmail.com</p>
+                <p id="nombreNav" class="header_userName">Example Name</p>
+                <p id="emailNav" class="header_mail">example@gmail.com</p>
             </div>
             <button id="btnCerrarSesion" class="header_LogOut">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5.616 20q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h6.403v1H5.616q-.231 0-.424.192T5 5.616v12.769q0 .23.192.423t.423.192h6.404v1zm10.846-4.461l-.702-.72l2.319-2.319H9.192v-1h8.887l-2.32-2.32l.702-.718L20 12z"/></svg>
@@ -78,25 +72,25 @@
     <main class="main"> 
         <!-- HOME -->
         <section id="Inicio" class="inicio window showWindow">
-            <h2 class="inicio_title">Bienvenido, <span>Nombre del Administrador</span></h2>
+            <h2 class="inicio_title">Bienvenido, <span id="nombreAdminDashboard">Nombre del Administrador</span></h2>
             <div class="inicio_container">
                 <!-- RUBRICAS CREADAS -->
                 <article class="inicio_card">
                     <h3 class="card_title">Rubricas Creadas</h3>
                     <p class="card_subtitle">Total de Rubricas en el sistema</p>
-                    <p class="card_data">0</p>
+                    <p id="rubricasTotal" class="card_data">0</p>
                 </article>
                 <!-- TOTAL GRUPOS -->
                 <article class="inicio_card">
                     <h3 class="card_title">Grupos</h3>
                     <p class="card_subtitle">Grupos Creados</p>
-                    <p class="card_data">0</p>
+                    <p id="gruposTotal" class="card_data">0</p>
                 </article>
                 <!-- RUBRICAS PROFESORES -->
                 <article class="inicio_card">
                     <h3 class="card_title">Profesores</h3>
                     <p class="card_subtitle">Total de profesores registrados</p>
-                    <p class="card_data">0</p>
+                    <p id="profesoresTotal" class="card_data">0</p>
                 </article>
                 <!-- ACCIONES RAPIDAS -->
                 <article class="inicio_card inicio_card--large">
@@ -120,26 +114,22 @@
                     <h3 class="card_title">Rubricas Recientes</h3>
                     <p class="card_subtitle">Últimas rúbricas agregadas al sistema</p>
 
-                    <!-- RUBRICA COMPONENTE -->
-                    <div class="resumenRubrica">
-                        <div class="resumenRubrica_container">
-                            <h4 class="resumenRubrica_name">Nombre Rubrica</h4>
-                            <p class="resumenRubrica_criterios">0 Criterios</p>
-                        </div>
-                        <button class="resumenRubrica_button">Ver</button>
-                    </div>
-                    <!-- RUBRICA COMPONENTE -->
-                    <div class="resumenRubrica">
-                        <div class="resumenRubrica_container">
-                            <h4 class="resumenRubrica_name">Nombre Rubrica</h4>
-                            <p class="resumenRubrica_criterios">0 Criterios</p>
-                        </div>
-                        <button class="resumenRubrica_button">Ver</button>
+                    <div id="resumenRubricaContainer" class="resumenRubricaContainer">
+                        <!-- RUBRICA COMPONENTE -->
+                        <!-- <div class="resumenRubrica">
+                            <div class="resumenRubrica_container">
+                                <h4 class="resumenRubrica_name">Nombre Rubrica</h4>
+                                <p class="resumenRubrica_criterios">0 Criterios</p>
+                            </div>
+                            <button class="resumenRubrica_button">Ver</button>
+                        </div> -->
+
                     </div>
                 </article>
 
             </div>
         </section>
+
 
         <!-- CREAR RUBRICA -->
         <section id="CrearRubrica" class="createRubrica window">
@@ -148,14 +138,14 @@
             <article class="createRubrica_container">
                 <h3 class="createRubrica_subtitle">Información General</h3>
                 <label class="createRubrica_label" for="">Título de la Rúbrica</label>
-                <input class="createRubrica_input" type="text" placeholder="Escribe el titulo de tu rubrica">
+                <input id="inputTituloRubrica" class="createRubrica_input" type="text" placeholder="Escribe el titulo de tu rubrica">
                 <label class="createRubrica_label" for="">Descripción</label>
-                <input class="createRubrica_input" type="text" placeholder="Describe el proceso y contexto de esta rubrica">
+                <input id="inputDescriptionRubrica" class="createRubrica_input" type="text" placeholder="Describe el proceso y contexto de esta rubrica">
             </article>
 
             <article class="createRubrica_container">
-                <div class="containerCriterios">
-                    <h3 class="createRubrica_subtitle">Criterios de Evaluación</h3>
+                <h3 class="createRubrica_subtitle">Criterios de Evaluación</h3>
+                <div id="containerCriterios" class="containerCriterios">
                     <!-- CRITERIO -->
                     <article class="criterio">
                         <div class="criterio_flex">
@@ -166,72 +156,67 @@
                         </div>
                         <label class="createRubrica_label" for="">Pregunta/Descripción</label>
                         <input class="createRubrica_input" type="text" placeholder="Escribe la descripcion o la pregunta de este criterio">
-
+                        <label class="createRubrica_label" for="">Ponderación</label>
+                        <input class="createRubrica_input" type="text" placeholder="Escribe la ponderación de este criterio">
                         <!-- CRITERIO POINT -->
                         <div class="createRubrica_criterioFlex">
                             <textarea placeholder="Escribe la descripcion del puntaje correspondiente" class="createRubrica_textarea" name="" id=""></textarea>
-                            <input class="createRubrica_inputPorcentaje" type="number" placeholder="Porcentaje">
                             <p class="createRubrica_criterioPoint">Debajo del estandar</p>
                         </div>
                         <!-- CRITERIO POINT -->
                         <div class="createRubrica_criterioFlex">
                             <textarea placeholder="Escribe la descripcion del puntaje correspondiente" class="createRubrica_textarea" name="" id=""></textarea>
-                            <input class="createRubrica_inputPorcentaje" type="number" placeholder="Porcentaje">
                             <p class="createRubrica_criterioPoint">Acercandose al estandar</p>
                         </div>
                         <!-- CRITERIO POINT -->
                         <div class="createRubrica_criterioFlex">
                             <textarea placeholder="Escribe la descripcion del puntaje correspondiente" class="createRubrica_textarea" name="" id=""></textarea>
-                            <input class="createRubrica_inputPorcentaje" type="number" placeholder="Porcentaje">
                             <p class="createRubrica_criterioPoint">En el estandar</p>
                         </div>
                         <!-- CRITERIO POINT -->
                         <div class="createRubrica_criterioFlex">
                             <textarea placeholder="Escribe la descripcion del puntaje correspondiente" class="createRubrica_textarea" name="" id=""></textarea>
-                            <input class="createRubrica_inputPorcentaje" type="number" placeholder="Porcentaje">
                             <p class="createRubrica_criterioPoint">Debajo del estandar</p>
                         </div>
                     </article>
                     <!-- CRITERIO -->
                     <article class="criterio">
                         <div class="criterio_flex">
-                            <p class="criterio_title">Criterio 1</p>
+                            <p class="criterio_title">Criterio 2</p>
                             <button class="criterio_buttonDelete">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 40 40"><path fill="currentColor" d="M32.937 7.304H27.19v-.956c0-1.345-.423-2.32-1.278-2.915c-.604-.39-1.353-.588-2.224-.588h-6.441l-.014.003l-.014-.003h-.909c-2.259 0-3.503 1.244-3.503 3.503v.956H7.063a.75.75 0 0 0 0 1.5h.647l1.946 25.785c0 1.631.945 2.566 2.594 2.566h15.461c1.611 0 2.557-.93 2.592-2.51L32.25 8.804h.686a.75.75 0 0 0 .001-1.5m-2.302 2.976H9.326l-.111-1.476h21.531zM14.308 6.348c0-1.423.58-2.003 2.003-2.003h7.378c.578 0 1.053.117 1.389.333c.413.287.613.833.613 1.67v.956H14.308zm14.498 28.224c-.019.81-.295 1.083-1.095 1.083H12.25c-.818 0-1.094-.269-1.096-1.123L9.439 11.779h21.082z"/><path fill="currentColor" d="M17.401 12.969a.75.75 0 0 0-.722.776l.704 19.354a.75.75 0 0 0 .748.723l.028-.001a.75.75 0 0 0 .722-.776l-.703-19.355c-.015-.414-.353-.757-.777-.721m-4.649.001a.75.75 0 0 0-.696.8l1.329 19.354a.75.75 0 0 0 .747.698l.053-.002a.75.75 0 0 0 .696-.8l-1.329-19.354a.756.756 0 0 0-.8-.696m9.784-.001c-.419-.04-.762.308-.776.722l-.705 19.354a.75.75 0 0 0 .722.776l.028.001a.75.75 0 0 0 .748-.723l.705-19.354a.75.75 0 0 0-.722-.776m4.649.001a.757.757 0 0 0-.8.696L25.056 33.02a.75.75 0 0 0 .696.8l.053.002a.75.75 0 0 0 .747-.698l1.329-19.354a.75.75 0 0 0-.696-.8"/></svg>
                             </button>
                         </div>
                         <label class="createRubrica_label" for="">Pregunta/Descripción</label>
                         <input class="createRubrica_input" type="text" placeholder="Escribe la descripcion o la pregunta de este criterio">
+                        <label class="createRubrica_label" for="">Ponderación</label>
+                        <input class="createRubrica_input" type="text" placeholder="Escribe la ponderación de este criterio">
 
                         <!-- CRITERIO POINT -->
                         <div class="createRubrica_criterioFlex">
                             <textarea placeholder="Escribe la descripcion del puntaje correspondiente" class="createRubrica_textarea" name="" id=""></textarea>
-                            <input class="createRubrica_inputPorcentaje" type="number" placeholder="Porcentaje">
                             <p class="createRubrica_criterioPoint">Debajo del estandar</p>
                         </div>
                         <!-- CRITERIO POINT -->
                         <div class="createRubrica_criterioFlex">
                             <textarea placeholder="Escribe la descripcion del puntaje correspondiente" class="createRubrica_textarea" name="" id=""></textarea>
-                            <input class="createRubrica_inputPorcentaje" type="number" placeholder="Porcentaje">
                             <p class="createRubrica_criterioPoint">Acercandose al estandar</p>
                         </div>
                         <!-- CRITERIO POINT -->
                         <div class="createRubrica_criterioFlex">
                             <textarea placeholder="Escribe la descripcion del puntaje correspondiente" class="createRubrica_textarea" name="" id=""></textarea>
-                            <input class="createRubrica_inputPorcentaje" type="number" placeholder="Porcentaje">
                             <p class="createRubrica_criterioPoint">En el estandar</p>
                         </div>
                         <!-- CRITERIO POINT -->
                         <div class="createRubrica_criterioFlex">
                             <textarea placeholder="Escribe la descripcion del puntaje correspondiente" class="createRubrica_textarea" name="" id=""></textarea>
-                            <input class="createRubrica_inputPorcentaje" type="number" placeholder="Porcentaje">
                             <p class="createRubrica_criterioPoint">Debajo del estandar</p>
                         </div>
                     </article>
                 </div>
 
                 <div class="createRubrica_flex">
-                    <button class="createRubrica_addCriterio">
+                    <button onclick="addCriterio()" class="createRubrica_addCriterio">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M11.5 12.5H6v-1h5.5V6h1v5.5H18v1h-5.5V18h-1z"/></svg>
                         Añadir Criterio
                     </button>
@@ -258,7 +243,7 @@
 
             <input class="misRubricas_inpuSearch" type="text" placeholder="Buscar Rubricas...">
 
-            <div class="containerRubricas">
+            <div id="containerRubricas" class="containerRubricas">
                 <!-- RUBRICA -->
                 <article class="rubrica">
                     <div class="rubrica_container">
@@ -311,7 +296,7 @@
         </section>
 
 
-        <!-- COMPLETAR RUBRICA -->
+        <!-- SIMULAR RUBRICA -->
         <section id="CompletarRubrica" class="completarRubrica window">
             <button class="completarRubrica_button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 1024 1024"><path fill="currentColor" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64"/><path fill="currentColor" d="m237.248 512l265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312z"/></svg>
@@ -320,8 +305,8 @@
 
             
             
-            <h2 class="completarRubrica_title">Trabajo Escrito</h2>
-            <p class="completarRubrica_description">Evaluación de trabajo escrito académico</p>
+            <h2 id="rubricaTitulo" class="completarRubrica_title">Trabajo Escrito</h2>
+            <p id="rubricaDescripcion" class="completarRubrica_description">Evaluación de trabajo escrito académico</p>
 
             <!-- SELECT USER -->
             <div class="completarRubrica_selectUser">
@@ -335,7 +320,7 @@
                 </select>
             </div>
             
-            <div class="containerQuestions">
+            <div id="containerQuestions" class="containerQuestions">
                 <!-- QUESTION -->
                 <article class="question">
                     <p class="question_puntaje">Puntaje: <span>25%</span></p>
@@ -383,11 +368,6 @@
                     </div>
                 </article>
             </div>
-
-            <button class="question_saveResponses">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20 7.423v10.962q0 .69-.462 1.153T18.384 20H5.616q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h10.961zm-1 .427L16.15 5H5.616q-.27 0-.443.173T5 5.616v12.769q0 .269.173.442t.443.173h12.769q.269 0 .442-.173t.173-.443zm-7 8.688q.827 0 1.414-.586T14 14.538t-.587-1.413T12 12.539t-1.413.586T10 14.538t.587 1.414t1.413.586M6.77 9.77h7.422v-3H6.77zM5 7.85V19V5z"/></svg>
-                Guardar Evaluación
-            </button>
         </section>
 
 
@@ -402,7 +382,7 @@
                 </div>
             </div>
             <h3 class="misEstudiantes_subtitle">Grupos:</h3>
-            <div class="containerGrupos">
+            <div id="containerGrupos" class="containerGrupos">
                 <!-- GRUPO -->
                 <article class="grupo">
                     <p class="grupo_name">Grupo A</p>
@@ -417,9 +397,9 @@
                 </article>
             </div>
             <h3 class="misEstudiantes_subtitle">Estudiantes:</h3>
-            <div class="containerEstudiantes">
+            <div id="containerEstudiantes" class="containerEstudiantes">
                 <!-- ESTUDIANTE -->
-                <article class="estudiante">
+                <!-- <article class="estudiante">
                     <p class="estudiante_name">Juan Carlos David</p>
                     <div class="estudiante_botonera">
                         <button class="rubrica_button">
@@ -429,34 +409,47 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 40 40"><path fill="currentColor" d="M32.937 7.304H27.19v-.956c0-1.345-.423-2.32-1.278-2.915c-.604-.39-1.353-.588-2.224-.588h-6.441l-.014.003l-.014-.003h-.909c-2.259 0-3.503 1.244-3.503 3.503v.956H7.063a.75.75 0 0 0 0 1.5h.647l1.946 25.785c0 1.631.945 2.566 2.594 2.566h15.461c1.611 0 2.557-.93 2.592-2.51L32.25 8.804h.686a.75.75 0 0 0 .001-1.5m-2.302 2.976H9.326l-.111-1.476h21.531zM14.308 6.348c0-1.423.58-2.003 2.003-2.003h7.378c.578 0 1.053.117 1.389.333c.413.287.613.833.613 1.67v.956H14.308zm14.498 28.224c-.019.81-.295 1.083-1.095 1.083H12.25c-.818 0-1.094-.269-1.096-1.123L9.439 11.779h21.082z"/><path fill="currentColor" d="M17.401 12.969a.75.75 0 0 0-.722.776l.704 19.354a.75.75 0 0 0 .748.723l.028-.001a.75.75 0 0 0 .722-.776l-.703-19.355c-.015-.414-.353-.757-.777-.721m-4.649.001a.75.75 0 0 0-.696.8l1.329 19.354a.75.75 0 0 0 .747.698l.053-.002a.75.75 0 0 0 .696-.8l-1.329-19.354a.756.756 0 0 0-.8-.696m9.784-.001c-.419-.04-.762.308-.776.722l-.705 19.354a.75.75 0 0 0 .722.776l.028.001a.75.75 0 0 0 .748-.723l.705-19.354a.75.75 0 0 0-.722-.776m4.649.001a.757.757 0 0 0-.8.696L25.056 33.02a.75.75 0 0 0 .696.8l.053.002a.75.75 0 0 0 .747-.698l1.329-19.354a.75.75 0 0 0-.696-.8"/></svg>
                         </button>
                     </div>
-                </article>
-                <!-- ESTUDIANTE -->
-                <article class="estudiante">
-                    <p class="estudiante_name">Juan Carlos David</p>
-                    <div class="estudiante_botonera">
-                        <button class="rubrica_button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 1024 1024"><path fill="currentColor" d="M832 512a32 32 0 1 1 64 0v352a32 32 0 0 1-32 32H160a32 32 0 0 1-32-32V160a32 32 0 0 1 32-32h352a32 32 0 0 1 0 64H192v640h640z"/><path fill="currentColor" d="m469.952 554.24l52.8-7.552L847.104 222.4a32 32 0 1 0-45.248-45.248L477.44 501.44l-7.552 52.8zm422.4-422.4a96 96 0 0 1 0 135.808l-331.84 331.84a32 32 0 0 1-18.112 9.088L436.8 623.68a32 32 0 0 1-36.224-36.224l15.104-105.6a32 32 0 0 1 9.024-18.112l331.904-331.84a96 96 0 0 1 135.744 0z"/></svg>
-                        </button>
-                        <button class="criterio_buttonDelete">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 40 40"><path fill="currentColor" d="M32.937 7.304H27.19v-.956c0-1.345-.423-2.32-1.278-2.915c-.604-.39-1.353-.588-2.224-.588h-6.441l-.014.003l-.014-.003h-.909c-2.259 0-3.503 1.244-3.503 3.503v.956H7.063a.75.75 0 0 0 0 1.5h.647l1.946 25.785c0 1.631.945 2.566 2.594 2.566h15.461c1.611 0 2.557-.93 2.592-2.51L32.25 8.804h.686a.75.75 0 0 0 .001-1.5m-2.302 2.976H9.326l-.111-1.476h21.531zM14.308 6.348c0-1.423.58-2.003 2.003-2.003h7.378c.578 0 1.053.117 1.389.333c.413.287.613.833.613 1.67v.956H14.308zm14.498 28.224c-.019.81-.295 1.083-1.095 1.083H12.25c-.818 0-1.094-.269-1.096-1.123L9.439 11.779h21.082z"/><path fill="currentColor" d="M17.401 12.969a.75.75 0 0 0-.722.776l.704 19.354a.75.75 0 0 0 .748.723l.028-.001a.75.75 0 0 0 .722-.776l-.703-19.355c-.015-.414-.353-.757-.777-.721m-4.649.001a.75.75 0 0 0-.696.8l1.329 19.354a.75.75 0 0 0 .747.698l.053-.002a.75.75 0 0 0 .696-.8l-1.329-19.354a.756.756 0 0 0-.8-.696m9.784-.001c-.419-.04-.762.308-.776.722l-.705 19.354a.75.75 0 0 0 .722.776l.028.001a.75.75 0 0 0 .748-.723l.705-19.354a.75.75 0 0 0-.722-.776m4.649.001a.757.757 0 0 0-.8.696L25.056 33.02a.75.75 0 0 0 .696.8l.053.002a.75.75 0 0 0 .747-.698l1.329-19.354a.75.75 0 0 0-.696-.8"/></svg>
-                        </button>
-                    </div>
-                </article>
-                <!-- ESTUDIANTE -->
-                <article class="estudiante">
-                    <p class="estudiante_name">Juan Carlos David</p>
-                    <div class="estudiante_botonera">
-                        <button class="rubrica_button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 1024 1024"><path fill="currentColor" d="M832 512a32 32 0 1 1 64 0v352a32 32 0 0 1-32 32H160a32 32 0 0 1-32-32V160a32 32 0 0 1 32-32h352a32 32 0 0 1 0 64H192v640h640z"/><path fill="currentColor" d="m469.952 554.24l52.8-7.552L847.104 222.4a32 32 0 1 0-45.248-45.248L477.44 501.44l-7.552 52.8zm422.4-422.4a96 96 0 0 1 0 135.808l-331.84 331.84a32 32 0 0 1-18.112 9.088L436.8 623.68a32 32 0 0 1-36.224-36.224l15.104-105.6a32 32 0 0 1 9.024-18.112l331.904-331.84a96 96 0 0 1 135.744 0z"/></svg>
-                        </button>
-                        <button class="criterio_buttonDelete">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 40 40"><path fill="currentColor" d="M32.937 7.304H27.19v-.956c0-1.345-.423-2.32-1.278-2.915c-.604-.39-1.353-.588-2.224-.588h-6.441l-.014.003l-.014-.003h-.909c-2.259 0-3.503 1.244-3.503 3.503v.956H7.063a.75.75 0 0 0 0 1.5h.647l1.946 25.785c0 1.631.945 2.566 2.594 2.566h15.461c1.611 0 2.557-.93 2.592-2.51L32.25 8.804h.686a.75.75 0 0 0 .001-1.5m-2.302 2.976H9.326l-.111-1.476h21.531zM14.308 6.348c0-1.423.58-2.003 2.003-2.003h7.378c.578 0 1.053.117 1.389.333c.413.287.613.833.613 1.67v.956H14.308zm14.498 28.224c-.019.81-.295 1.083-1.095 1.083H12.25c-.818 0-1.094-.269-1.096-1.123L9.439 11.779h21.082z"/><path fill="currentColor" d="M17.401 12.969a.75.75 0 0 0-.722.776l.704 19.354a.75.75 0 0 0 .748.723l.028-.001a.75.75 0 0 0 .722-.776l-.703-19.355c-.015-.414-.353-.757-.777-.721m-4.649.001a.75.75 0 0 0-.696.8l1.329 19.354a.75.75 0 0 0 .747.698l.053-.002a.75.75 0 0 0 .696-.8l-1.329-19.354a.756.756 0 0 0-.8-.696m9.784-.001c-.419-.04-.762.308-.776.722l-.705 19.354a.75.75 0 0 0 .722.776l.028.001a.75.75 0 0 0 .748-.723l.705-19.354a.75.75 0 0 0-.722-.776m4.649.001a.757.757 0 0 0-.8.696L25.056 33.02a.75.75 0 0 0 .696.8l.053.002a.75.75 0 0 0 .747-.698l1.329-19.354a.75.75 0 0 0-.696-.8"/></svg>
-                        </button>
-                    </div>
-                </article>
+                </article> -->
             </div>
+        </section>
+
+
+
+        <!-- EDITAR RUBRICA -->
+         <section id="EditarRubrica" class="createRubrica window">
+            <h2 class="createRubrica_title">Editar Rúbrica</h2>
+
+            <article class="createRubrica_container">
+                <h3 class="createRubrica_subtitle">Información General</h3>
+                <label class="createRubrica_label" for="">Título de la Rúbrica</label>
+                <input id="inputEditTituloRubrica" class="createRubrica_input" type="text" placeholder="Escribe el titulo de tu rubrica">
+                <label class="createRubrica_label" for="">Descripción</label>
+                <input id="inputEditDescriptionRubrica" class="createRubrica_input" type="text" placeholder="Describe el proceso y contexto de esta rubrica">
+            </article>
+
+            <article class="createRubrica_container">
+                <h3 class="createRubrica_subtitle">Criterios de Evaluación</h3>
+                <div id="containerCriteriosEdit" class="containerCriterios">
+
+                </div>
+
+                <div class="createRubrica_flex">
+                    <button class="createRubrica_addCriterio">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M11.5 12.5H6v-1h5.5V6h1v5.5H18v1h-5.5V18h-1z"/></svg>
+                        Añadir Criterio
+                    </button>
+
+                    <button class="createRubrica_saveCriterio">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20 7.423v10.962q0 .69-.462 1.153T18.384 20H5.616q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h10.961zm-1 .427L16.15 5H5.616q-.27 0-.443.173T5 5.616v12.769q0 .269.173.442t.443.173h12.769q.269 0 .442-.173t.173-.443zm-7 8.688q.827 0 1.414-.586T14 14.538t-.587-1.413T12 12.539t-1.413.586T10 14.538t.587 1.414t1.413.586M6.77 9.77h7.422v-3H6.77zM5 7.85V19V5z"/></svg>
+                        Guardar Rubrica
+                    </button>
+                </div>
+
+            </article>
         </section>
         
     </main>
+
+
 </body>
 </html>

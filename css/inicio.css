@@ -100,6 +100,12 @@
     gap: .5em;
 }
 
+.resumenRubricaContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
 .resumenRubrica_name {
     font-weight: var(--weightRegular);
 }
