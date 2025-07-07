@@ -258,7 +258,7 @@ const simularRubrica = async (idRubrica) => {
         const {titulo, ponderacion, descripcion_de, descripcion_ae, descripcion_e, descripcion_se} = criterio;
         const $criterio = /* html */
             `<article class="question">
-                <p class="question_puntaje">Puntaje: <span>%${ponderacion}</span></p>
+                <p class="question_puntaje">Puntaje: <span>${ponderacion}%</span></p>
                 <h3 class="question_title">Criterio ${iterador+1}: ${titulo}</h3>
                 <div class="question_botonera">
                     <div class="question_flex">
