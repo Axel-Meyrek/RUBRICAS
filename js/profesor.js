@@ -126,7 +126,6 @@ const renderRubricas = () => {
     $containerRubricas.innerHTML = '';
 
     rubricas.forEach(rubrica => {
-        console.log(rubrica);
         const {id, titulo, descripcion, fecha_creacion } = rubrica;
         const $rubrica = /* html */
             `<article class="rubrica">
@@ -151,7 +150,6 @@ const renderRubricas = () => {
 const renderGrupos = () => {
     const $containerGrupos = document.querySelector('#containerGrupos');
     $containerGrupos.innerHTML = '';
-    console.log(grupos);
 
     grupos.forEach(grupo => {
         const $grupo = /* html */
@@ -214,7 +212,6 @@ const showWindowEvaluarRubrica = () => {
 
 const renderOptionsEstudiantes = async () => {
     const estudiantes = await recuperarEstudiantes(document.querySelector('#selectGrupos').value);
-    console.log(estudiantes);
     
     const $selectEstudiantes = document.querySelector('#selectEstudiantes');
     $selectEstudiantes.innerHTML = '<option disabled selected value="">Selecciona un estudiante</option>';
