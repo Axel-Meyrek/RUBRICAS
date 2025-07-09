@@ -1,34 +1,26 @@
 /* VARIABLES Y COMPONENTES */
 const $buttonLogin = document.querySelector('#buttonLogin');
 
+const $id = document.querySelector('#inputLoginID');
+
+const $password = document.querySelector('#inputLoginPassword');
+
 /* FUNCIONES */
 const validarLogin = e => {
     e.preventDefault();
-    const $id = document.querySelector('#inputLoginID');
-    const $password = document.querySelector('#inputLoginPassword');
 
-    if($id.value === '') return;
-    if($password.value === '') return;
-
-    recuperarUser();
+    if($id.value == '') {
+        $id.classList.add('formLogin_input--error');
+        return;
+    }
+    if($password.value === '') {
+        $password.classList.add('formLogin_input--error');
+        return;
+    }
 }
 
-const recuperarUser = async () => {
-    const id = document.querySelector('#inputLoginID').value;
-    const password = document.querySelector('#inputLoginPassword').value;
-
-    const URL = '../api/login.php';
-    const options = {
-        method: 'POST',
-        body: JSON.stringify({ id, password }),
-        headers: { 'Content-Type': 'application/json' }
-    };
-
-    const response = await fetch(URL, options);
-    const data = await response.json();
-    
-    saveSessionInLocalStorach(data);
-    redirectionUser(data.tipo);
+const removeErrorInput = (e) => {
+    e.target.classList.remove('formLogin_input--error');
 }
 
 const redirectionUser = (tipoUser) => {
@@ -42,3 +34,7 @@ const saveSessionInLocalStorach = (data) => {
 
 /* EVENTOS */
 $buttonLogin.addEventListener('click', validarLogin);
+
+$id.addEventListener('input', removeErrorInput);
+
+$password.addEventListener('input', removeErrorInput);
