@@ -5,6 +5,10 @@ import Grupo from "../components/Grupo.js";
 
 import Estudiante from "../components/Estudiante.js";
 
+import Rubrica from "../components/Rubrica.js";
+
+import Criterio from "../components/Criterio.js";
+
 let administrador = {};
 
 let rubricas = [];
@@ -12,6 +16,8 @@ let rubricas = [];
 let profesores = [];
 
 let grupos = [];
+
+const $selectGrupos = document.querySelector('#selectGrupos');
 
 /* FUNCIONES */
 
@@ -39,12 +45,13 @@ const showResumenData = async () => {
 
     renderGrupos();
 
+    renderRubricas();
+
 }
 
 const recuperarStorach = () => {
     const data = JSON.parse(localStorage.getItem('Sesion'));
     administrador = data;
-    console.log(administrador)
 }
 
 const recuperarRubricas = async () => {
@@ -80,9 +87,32 @@ const recuperarEstudiantes = async (idGrupo) => {
     return data;
 }
 
+const recuperarCriterios = async (idRubrica) => {
+    const URL = '../api/getCriterios.php';
+    const options = {
+        method: 'POST',
+        body: JSON.stringify({ id_rubrica: idRubrica }),
+        headers: { 'Content-Type': 'application/json' }
+    };
+    const response = await fetch(URL, options);
+    const data = await response.json();
+    return data;
+}
+
+const recuperarGruposConRubricaAsignada = async (idRubrica) => {
+    const URL = '../api/gruposConRubricaAsignada.php';
+    const options = {
+        method: 'POST',
+        body: JSON.stringify({ id_rubrica: idRubrica }),
+        headers: { 'Content-Type': 'application/json' }
+    };
+    const response = await fetch(URL, options);
+    const data = await response.json();
+    return data;
+}
+
 const renderRubricasRecientes = () => {
     const $resumenRubricaContainer = document.querySelector('#resumenRubricaContainer');
-    console.log(rubricas);
 
     rubricas.slice(0, 2).forEach(rubrica => {
         const {titulo, fecha, id} = rubrica;
@@ -110,6 +140,63 @@ window.renderEstudiantes = async (idGrupo) => {
     });
 }
 
+const renderRubricas = () => {
+    const $containerRubricas = document.querySelector('#containerRubricas');
+    $containerRubricas.innerHTML = '';
+
+    rubricas.forEach(rubrica => {
+        const {titulo, descripcion, fecha, id} = rubrica;
+        $containerRubricas.innerHTML += Rubrica(titulo, descripcion, fecha, id);
+    });
+}
+
+window.simularRubrica = async (idRubrica) => {
+    showWindowSimularRubrica();
+    
+    const rubrica = rubricas.find(rubrica => rubrica.id == idRubrica);
+    
+    document.querySelector('#rubricaTitulo').textContent = rubrica.titulo;
+    document.querySelector('#rubricaDescripcion').textContent = rubrica.descripcion;
+
+    await renderOptionsGrupos(idRubrica);
+    
+    const criterios = await recuperarCriterios(idRubrica) || [];
+    
+    const $containerQuestions = document.querySelector('#containerQuestions');
+    $containerQuestions.innerHTML = '';
+
+    criterios.forEach((criterio, iterador) => {
+        const {ponderacion, titulo, descripcion_se, descripcion_e, descripcion_ae, descripcion_de} = criterio;
+        $containerQuestions.innerHTML += Criterio(iterador, ponderacion, titulo, descripcion_se, descripcion_e, descripcion_ae, descripcion_de);
+    });
+}
+
+const renderOptionsGrupos = async (idRubrica) => {
+    const grupos = await recuperarGruposConRubricaAsignada(idRubrica);
+    $selectGrupos.innerHTML = '<option disabled selected value="">Selecciona un grupo</option>';
+    grupos.forEach(grupo => {
+        const {id, nombre} = grupo;
+        $selectGrupos.innerHTML += `<option value="${id}">${nombre}</option>`;
+    });
+}
+
+const renderOptionsEstudiantes = async () => {
+    const estudiantes = await recuperarEstudiantes($selectGrupos.value);
+    const $selectEstudiantes = document.querySelector('#selectEstudiantes');
+    $selectEstudiantes.innerHTML = '<option disabled selected value="">Selecciona un estudiante</option>';
+    estudiantes.forEach(estudiante => {
+        const {id, nombre} = estudiante;
+        $selectEstudiantes.innerHTML += `<option value="${id}">${nombre}</option>`;
+    });
+}
+
+
+const showWindowSimularRubrica = () => {
+    hiddenAllWindows();
+    const selector = '#CompletarRubrica';
+    const $window = document.querySelector(selector);
+    $window.classList.add('showWindow');
+}
 
 /* EVENTOS */
 document.addEventListener('DOMContentLoaded', () => {
@@ -118,3 +205,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     showResumenData();
 }); 
+
+$selectGrupos.addEventListener('change', renderOptionsEstudiantes);
