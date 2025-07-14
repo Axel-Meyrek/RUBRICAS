@@ -150,6 +150,25 @@ const renderRubricas = () => {
     });
 }
 
+const renderOptionsGrupos = async (idRubrica) => {
+    const grupos = await recuperarGruposConRubricaAsignada(idRubrica);
+    $selectGrupos.innerHTML = '<option disabled selected value="">Selecciona un grupo</option>';
+    grupos.forEach(grupo => {
+        const {id, nombre} = grupo;
+        $selectGrupos.innerHTML += `<option value="${id}">${nombre}</option>`;
+    });
+}
+
+const renderOptionsEstudiantes = async () => {
+    const estudiantes = await recuperarEstudiantes($selectGrupos.value);
+    const $selectEstudiantes = document.querySelector('#selectEstudiantes');
+    $selectEstudiantes.innerHTML = '<option disabled selected value="">Selecciona un estudiante</option>';
+    estudiantes.forEach(estudiante => {
+        const {id, nombre} = estudiante;
+        $selectEstudiantes.innerHTML += `<option value="${id}">${nombre}</option>`;
+    });
+}
+
 window.simularRubrica = async (idRubrica) => {
     showWindowSimularRubrica();
     
@@ -170,26 +189,6 @@ window.simularRubrica = async (idRubrica) => {
         $containerQuestions.innerHTML += Criterio(iterador, ponderacion, titulo, descripcion_se, descripcion_e, descripcion_ae, descripcion_de);
     });
 }
-
-const renderOptionsGrupos = async (idRubrica) => {
-    const grupos = await recuperarGruposConRubricaAsignada(idRubrica);
-    $selectGrupos.innerHTML = '<option disabled selected value="">Selecciona un grupo</option>';
-    grupos.forEach(grupo => {
-        const {id, nombre} = grupo;
-        $selectGrupos.innerHTML += `<option value="${id}">${nombre}</option>`;
-    });
-}
-
-const renderOptionsEstudiantes = async () => {
-    const estudiantes = await recuperarEstudiantes($selectGrupos.value);
-    const $selectEstudiantes = document.querySelector('#selectEstudiantes');
-    $selectEstudiantes.innerHTML = '<option disabled selected value="">Selecciona un estudiante</option>';
-    estudiantes.forEach(estudiante => {
-        const {id, nombre} = estudiante;
-        $selectEstudiantes.innerHTML += `<option value="${id}">${nombre}</option>`;
-    });
-}
-
 
 const showWindowSimularRubrica = () => {
     hiddenAllWindows();
