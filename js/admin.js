@@ -9,6 +9,8 @@ import Rubrica from "../components/Rubrica.js";
 
 import Criterio from "../components/Criterio.js";
 
+import CriterioEditable from "../components/CriterioEditable.js";
+
 let administrador = {};
 
 let rubricas = [];
@@ -160,8 +162,15 @@ const renderOptionsGrupos = async (idRubrica) => {
 }
 
 const renderOptionsEstudiantes = async () => {
-    const estudiantes = await recuperarEstudiantes($selectGrupos.value);
     const $selectEstudiantes = document.querySelector('#selectEstudiantes');
+    
+    if($selectGrupos.value === '') {
+        $selectEstudiantes.innerHTML = '<option disabled selected value="">Selecciona un estudiante</option>';
+        return;
+    }
+
+    const estudiantes = await recuperarEstudiantes($selectGrupos.value);
+
     $selectEstudiantes.innerHTML = '<option disabled selected value="">Selecciona un estudiante</option>';
     estudiantes.forEach(estudiante => {
         const {id, nombre} = estudiante;
@@ -178,6 +187,8 @@ window.simularRubrica = async (idRubrica) => {
     document.querySelector('#rubricaDescripcion').textContent = rubrica.descripcion;
 
     await renderOptionsGrupos(idRubrica);
+
+    await renderOptionsEstudiantes();
     
     const criterios = await recuperarCriterios(idRubrica) || [];
     
@@ -190,9 +201,35 @@ window.simularRubrica = async (idRubrica) => {
     });
 }
 
+window.editarRubrica = async (idRubrica) => {
+    showWindowEditarRubricas();
+
+    const rubrica = rubricas.find(rubrica => rubrica.id == idRubrica);
+
+    document.querySelector('#inputEditTituloRubrica').value = rubrica.titulo;
+    document.querySelector('#inputEditDescriptionRubrica').value = rubrica.descripcion;
+
+    const criterios = await recuperarCriterios(idRubrica) || [];
+
+    const $containerCriteriosEdit = document.querySelector('#containerCriteriosEdit');
+    $containerCriteriosEdit.innerHTML = '';
+
+    criterios.forEach( (criterio, iterador)=> {
+        const {titulo, ponderacion, descripcion_se, descripcion_e, descripcion_ae, descripcion_de} = criterio;
+        $containerCriteriosEdit.innerHTML += CriterioEditable(iterador, titulo, ponderacion, descripcion_se, descripcion_e, descripcion_ae, descripcion_de);
+    });
+}
+
 const showWindowSimularRubrica = () => {
     hiddenAllWindows();
     const selector = '#CompletarRubrica';
+    const $window = document.querySelector(selector);
+    $window.classList.add('showWindow');
+}
+
+const showWindowEditarRubricas = () => {
+    hiddenAllWindows();
+    const selector = '#EditarRubrica';
     const $window = document.querySelector(selector);
     $window.classList.add('showWindow');
 }
