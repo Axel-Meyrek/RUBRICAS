@@ -109,6 +109,12 @@
     align-items: center;
 }
 
+.criterio_flex--end {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
 .criterio_title {
     font-weight: var(--weightRegular);
 }
