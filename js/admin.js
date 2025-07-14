@@ -21,6 +21,8 @@ let grupos = [];
 
 const $selectGrupos = document.querySelector('#selectGrupos');
 
+const $btnAddCriterio = document.querySelector('#btnAddCriterio');
+
 /* FUNCIONES */
 
 const showResumenData = async () => {
@@ -220,6 +222,11 @@ window.editarRubrica = async (idRubrica) => {
     });
 }
 
+const addCriterio = () => {
+    const $containerCriterios = document.querySelector('#containerCriterios');
+    $containerCriterios.innerHTML += CriterioEditable();
+}
+
 const showWindowSimularRubrica = () => {
     hiddenAllWindows();
     const selector = '#CompletarRubrica';
@@ -243,3 +250,5 @@ document.addEventListener('DOMContentLoaded', () => {
 }); 
 
 $selectGrupos.addEventListener('change', renderOptionsEstudiantes);
+
+$btnAddCriterio.addEventListener('click', addCriterio);
