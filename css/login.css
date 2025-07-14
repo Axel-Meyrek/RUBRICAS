@@ -97,7 +97,11 @@
 }
 
 .sectionLogin_labelError {
-    color: red;
+    color: white;
+    padding: 1em;
+    text-align: center;
+    border-radius: 4px;
+    background-color: rgb(233, 91, 91);;
 }
 
 .formLogin_submit {

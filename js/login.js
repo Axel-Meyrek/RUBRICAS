@@ -5,18 +5,25 @@ const $id = document.querySelector('#inputLoginID');
 
 const $password = document.querySelector('#inputLoginPassword');
 
-/* FUNCIONES */
-const validarLogin = e => {
-    e.preventDefault();
 
-    if($id.value == '') {
+/* FUNCIONES */
+const validarLogin = () => {
+    if($id.value === '' && $password.value === '') {
         $id.classList.add('formLogin_input--error');
-        return;
+        $password.classList.add('formLogin_input--error');
+        return false;
+    }
+
+    if($id.value ==='') {
+        $id.classList.add('formLogin_input--error');
+        return false;
     }
     if($password.value === '') {
         $password.classList.add('formLogin_input--error');
-        return;
+        return false;
     }
+
+    return true;
 }
 
 const removeErrorInput = (e) => {
@@ -32,8 +39,45 @@ const saveSessionInLocalStorach = (data) => {
     localStorage.setItem('Sesion', JSON.stringify(data));
 }
 
+const recuperarUser = async e => {
+    e.preventDefault();
+
+    if(!validarLogin()) return;
+
+    const id = $id.value;
+    const password = $password.value;
+
+    const URL = '../api/login.php';
+    const options = {
+        method: 'POST',
+        body: JSON.stringify({ id, password}),
+        headers: { 'Content-Type': 'application/json' }
+    };
+
+    const response = await fetch(URL, options);
+    const data = await response.json();
+
+    if(data.error) {
+        usuarioNoEncontrado();
+        validarLogin();
+        return;
+    }
+
+    saveSessionInLocalStorach(data.usuario);
+
+    redirectionUser(data.tipo);
+}
+
+const usuarioNoEncontrado = () => {
+    $id.value = '';
+    $password.value = '';
+
+    const $alertUserNotFound = document.querySelector('#alertUserNotFound');
+    $alertUserNotFound.hidden = false;
+}
+
 /* EVENTOS */
-$buttonLogin.addEventListener('click', validarLogin);
+$buttonLogin.addEventListener('click', recuperarUser);
 
 $id.addEventListener('input', removeErrorInput);
 
