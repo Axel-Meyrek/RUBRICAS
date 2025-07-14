@@ -1,6 +1,10 @@
 /* VARIABLES Y COMPONENTES */
 import RubricaReciente from "../components/RubricaReciente.js";
 
+import Grupo from "../components/Grupo.js";
+
+import Estudiante from "../components/Estudiante.js";
+
 let administrador = {};
 
 let rubricas = [];
@@ -33,6 +37,8 @@ const showResumenData = async () => {
 
     renderRubricasRecientes();
 
+    renderGrupos();
+
 }
 
 const recuperarStorach = () => {
@@ -62,6 +68,18 @@ const recuperarProfesores = async () => {
     return data;
 }
 
+const recuperarEstudiantes = async (idGrupo) => {
+    const URL = '../api/getEstudiantes.php';
+    const options = {
+        method: 'POST',
+        body: JSON.stringify({id_grupo: idGrupo }),
+        headers: { 'Content-Type': 'application/json' }
+    };
+    const response = await fetch(URL, options);
+    const data = await response.json();
+    return data;
+}
+
 const renderRubricasRecientes = () => {
     const $resumenRubricaContainer = document.querySelector('#resumenRubricaContainer');
     console.log(rubricas);
@@ -69,6 +87,26 @@ const renderRubricasRecientes = () => {
     rubricas.slice(0, 2).forEach(rubrica => {
         const {titulo, fecha, id} = rubrica;
         $resumenRubricaContainer.innerHTML += RubricaReciente(titulo, fecha, id);
+    });
+}
+
+const renderGrupos = () => {
+    const $containerGrupos = document.querySelector('#containerGrupos');
+    $containerGrupos.innerHTML = '';
+    
+    grupos.forEach(grupo => {
+        const {id, nombre} = grupo;
+        $containerGrupos.innerHTML += Grupo(id, nombre);
+    })
+}
+
+window.renderEstudiantes = async (idGrupo) => {
+    const estudiantes = await recuperarEstudiantes(idGrupo);
+    const $containerEstudiantes = document.querySelector('#containerEstudiantes');
+    $containerEstudiantes.innerHTML = '';
+    estudiantes.forEach(estudiante => {
+        const {nombre} = estudiante;
+        $containerEstudiantes.innerHTML += Estudiante(nombre);
     });
 }
 
