@@ -8,7 +8,7 @@
 
     //VERIFICAR SI ES ADMINSIRADOR
     $queryAdmin = /* MySql */
-        "SELECT id, nombre, password
+        "SELECT id, nombre, email, password
         FROM Administradores
         WHERE id = '$id' and password = '$password';";
 
@@ -25,7 +25,7 @@
 
     //VERFICAR SI ES PROFESOR
     $queryProf = /* MySql */
-        "SELECT id, nombre, password
+        "SELECT id, nombre, email, password
         FROM Profesores
         WHERE id = '$id' and password = '$password';";
 
