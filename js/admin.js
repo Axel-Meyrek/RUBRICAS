@@ -19,9 +19,13 @@ let profesores = [];
 
 let grupos = [];
 
+let gruposSeleccionados = [];
+
 const $selectGrupos = document.querySelector('#selectGrupos');
 
 const $btnAddCriterio = document.querySelector('#btnAddCriterio');
+
+const $inputAutocompleteGrupos = document.querySelector('#inputAutocompleteGrupos');
 
 /* FUNCIONES */
 
@@ -227,6 +231,57 @@ const addCriterio = () => {
     $containerCriterios.innerHTML += CriterioEditable();
 }
 
+const renderGruposSeleccionados = () => {
+    const $containerGruposAsignados = document.querySelector('#containerGruposAsignados');
+    $containerGruposAsignados.innerHTML = '';
+
+    gruposSeleccionados.forEach(grupo => {
+        const {id, nombre} = grupo;
+        $containerGruposAsignados.innerHTML += /* html */
+            `<article class="grupoSeleccionado">
+                <p class="grupoSeleccionado_nombre">${nombre}</p>
+                <button onclick="removeGrupoSeleccionado(${id})" class="grupoSeleccionado_button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"/></svg>
+                </button>
+            </article>`;
+    });
+}
+
+const autocompleteGrupos = () => {
+    const $containerGruposAutocomplete = document.querySelector('#containerGruposAutocomplete');
+    if($inputAutocompleteGrupos.value === ''){
+        $containerGruposAutocomplete.innerHTML = '';
+        return;
+    } 
+
+    const value = $inputAutocompleteGrupos.value.toLowerCase();
+    const filtrados = grupos.filter(grupo => grupo.nombre.toLowerCase().includes(value));
+
+    $containerGruposAutocomplete.innerHTML = '';
+    filtrados.forEach(grupoFiltrado => {
+        const {id, nombre} = grupoFiltrado;
+        $containerGruposAutocomplete.innerHTML += `<article onclick="asignarRubricaAGrupo(${id})" class="autocomplete_option">${nombre}</article>`;
+    });
+}
+
+window.asignarRubricaAGrupo = (idGrupo) => {
+    const isValidate = gruposSeleccionados.find(grupo => grupo.id == idGrupo);
+    if(isValidate) return;
+
+    const grupo = grupos.find(grupo => grupo.id == idGrupo);
+    gruposSeleccionados.push(grupo);
+
+    renderGruposSeleccionados();
+
+    $inputAutocompleteGrupos.value = '';
+    autocompleteGrupos();
+}
+
+window.removeGrupoSeleccionado = (idGrupo) => {
+    gruposSeleccionados = gruposSeleccionados.filter(grupo => grupo.id != idGrupo);
+    renderGruposSeleccionados();
+}
+
 const showWindowSimularRubrica = () => {
     hiddenAllWindows();
     const selector = '#CompletarRubrica';
@@ -252,3 +307,5 @@ document.addEventListener('DOMContentLoaded', () => {
 $selectGrupos.addEventListener('change', renderOptionsEstudiantes);
 
 $btnAddCriterio.addEventListener('click', addCriterio);
+
+$inputAutocompleteGrupos.addEventListener('input', autocompleteGrupos);

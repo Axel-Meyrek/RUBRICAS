@@ -171,6 +171,46 @@
     justify-content: center;
 }
 
+.containerGruposAsignados {
+    display: flex;
+    gap: 1em;
+}
+
+.grupoSeleccionado {
+    padding: 1em;
+    background-color: var(--colorBackground);
+    max-width: 200px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid rgba(128, 128, 128, 0.256);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--colorTextLow);
+
+    & path {
+        color: var(--colorRed);
+    }
+}
+
+.grupoSeleccionado_button {
+    background-color: transparent;
+}
+
+.createRubrica_containerAutoComplete {
+    margin-top: -1em;
+    border: 1px solid rgba(128, 128, 128, 0.256);
+
+}
+
+.autocomplete_option {
+    padding: 1em;
+}
+
+.autocomplete_option:hover {
+    background-color: var(--colorBackground);
+}
+
 @media (width < 400px) {
     .createRubrica_flex {
         flex-wrap: wrap;
