@@ -21,11 +21,15 @@ let grupos = [];
 
 let gruposSeleccionados = [];
 
+let gruposSeleccionadosEdit = [];
+
 const $selectGrupos = document.querySelector('#selectGrupos');
 
 const $btnAddCriterio = document.querySelector('#btnAddCriterio');
 
 const $inputAutocompleteGrupos = document.querySelector('#inputAutocompleteGrupos');
+
+const $inputAutocompleteGruposEdit = document.querySelector('#inputAutocompleteGruposEdit');
 
 /* FUNCIONES */
 
@@ -215,6 +219,9 @@ window.editarRubrica = async (idRubrica) => {
     document.querySelector('#inputEditTituloRubrica').value = rubrica.titulo;
     document.querySelector('#inputEditDescriptionRubrica').value = rubrica.descripcion;
 
+    gruposSeleccionadosEdit = await recuperarGruposConRubricaAsignada(idRubrica);
+    renderGruposSeleccionadosEdit();
+
     const criterios = await recuperarCriterios(idRubrica) || [];
 
     const $containerCriteriosEdit = document.querySelector('#containerCriteriosEdit');
@@ -231,16 +238,32 @@ const addCriterio = () => {
     $containerCriterios.innerHTML += CriterioEditable();
 }
 
-const renderGruposSeleccionados = (contenedor, arreglo) => {
-    const $contenedor = document.querySelector('#' + contenedor);
-    $contenedor.innerHTML = '';
+const renderGruposSeleccionados = () => {
+    const $containerGruposAsignados = document.querySelector('#containerGruposAsignados');
+    $containerGruposAsignados.innerHTML = '';
 
-    arreglo.forEach(grupo => {
+    gruposSeleccionados.forEach(grupo => {
         const {id, nombre} = grupo;
-        $contenedor.innerHTML += /* html */
+        $containerGruposAsignados.innerHTML += /* html */
             `<article class="grupoSeleccionado">
                 <p class="grupoSeleccionado_nombre">${nombre}</p>
                 <button onclick="removeGrupoSeleccionado(${id})" class="grupoSeleccionado_button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"/></svg>
+                </button>
+            </article>`;
+    });
+}
+
+const renderGruposSeleccionadosEdit = () => {
+    const $containerGruposAsignadosEdit = document.querySelector('#containerGruposAsignadosEdit');
+    $containerGruposAsignadosEdit.innerHTML = '';
+
+    gruposSeleccionadosEdit.forEach(grupo => {
+        const {id, nombre} = grupo;
+        $containerGruposAsignadosEdit.innerHTML += /* html */
+            `<article class="grupoSeleccionado">
+                <p class="grupoSeleccionado_nombre">${nombre}</p>
+                <button onclick="removeGrupoSeleccionadoEdit(${id})" class="grupoSeleccionado_button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"/></svg>
                 </button>
             </article>`;
@@ -264,6 +287,23 @@ const autocompleteGrupos = () => {
     });
 }
 
+const autocompleteGruposEdit = () => {
+    const $containerGruposAutocompleteEdit = document.querySelector('#containerGruposAutocompleteEdit');
+    if($inputAutocompleteGruposEdit.value === ''){
+        $containerGruposAutocompleteEdit.innerHTML = '';
+        return;
+    } 
+
+    const value = $inputAutocompleteGruposEdit.value.toLowerCase();
+    const filtrados = grupos.filter(grupo => grupo.nombre.toLowerCase().includes(value));
+
+    $containerGruposAutocompleteEdit.innerHTML = '';
+    filtrados.forEach(grupoFiltrado => {
+        const {id, nombre} = grupoFiltrado;
+        $containerGruposAutocompleteEdit.innerHTML += `<article onclick="asignarRubricaAGrupoEdit(${id})" class="autocomplete_option">${nombre}</article>`;
+    });
+}
+
 window.asignarRubricaAGrupo = (idGrupo) => {
     const isValidate = gruposSeleccionados.find(grupo => grupo.id == idGrupo);
     if(isValidate) return;
@@ -271,15 +311,33 @@ window.asignarRubricaAGrupo = (idGrupo) => {
     const grupo = grupos.find(grupo => grupo.id == idGrupo);
     gruposSeleccionados.push(grupo);
 
-    renderGruposSeleccionados('containerGruposAsignados', gruposSeleccionados);
+    renderGruposSeleccionados();
 
     $inputAutocompleteGrupos.value = '';
     autocompleteGrupos();
 }
 
+window.asignarRubricaAGrupoEdit = (idGrupo) => {
+    const isValidate = gruposSeleccionadosEdit.find(grupo => grupo.id == idGrupo);
+    if(isValidate) return;
+
+    const grupo = grupos.find(grupo => grupo.id == idGrupo);
+    gruposSeleccionadosEdit.push(grupo);
+
+    renderGruposSeleccionadosEdit();
+
+    $inputAutocompleteGruposEdit.value = '';
+    autocompleteGruposEdit();
+}
+
 window.removeGrupoSeleccionado = (idGrupo) => {
     gruposSeleccionados = gruposSeleccionados.filter(grupo => grupo.id != idGrupo);
-    renderGruposSeleccionados('containerGruposAsignados', gruposSeleccionados);
+    renderGruposSeleccionados();
+}
+
+window.removeGrupoSeleccionadoEdit = (idGrupo) => {
+    gruposSeleccionadosEdit = gruposSeleccionadosEdit.filter(grupo => grupo.id != idGrupo);
+    renderGruposSeleccionadosEdit();
 }
 
 const showWindowSimularRubrica = () => {
@@ -309,3 +367,5 @@ $selectGrupos.addEventListener('change', renderOptionsEstudiantes);
 $btnAddCriterio.addEventListener('click', addCriterio);
 
 $inputAutocompleteGrupos.addEventListener('input', autocompleteGrupos);
+
+$inputAutocompleteGruposEdit.addEventListener('input', autocompleteGruposEdit);
