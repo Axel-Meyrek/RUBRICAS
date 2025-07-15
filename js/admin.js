@@ -231,13 +231,13 @@ const addCriterio = () => {
     $containerCriterios.innerHTML += CriterioEditable();
 }
 
-const renderGruposSeleccionados = () => {
-    const $containerGruposAsignados = document.querySelector('#containerGruposAsignados');
-    $containerGruposAsignados.innerHTML = '';
+const renderGruposSeleccionados = (contenedor, arreglo) => {
+    const $contenedor = document.querySelector('#' + contenedor);
+    $contenedor.innerHTML = '';
 
-    gruposSeleccionados.forEach(grupo => {
+    arreglo.forEach(grupo => {
         const {id, nombre} = grupo;
-        $containerGruposAsignados.innerHTML += /* html */
+        $contenedor.innerHTML += /* html */
             `<article class="grupoSeleccionado">
                 <p class="grupoSeleccionado_nombre">${nombre}</p>
                 <button onclick="removeGrupoSeleccionado(${id})" class="grupoSeleccionado_button">
@@ -271,7 +271,7 @@ window.asignarRubricaAGrupo = (idGrupo) => {
     const grupo = grupos.find(grupo => grupo.id == idGrupo);
     gruposSeleccionados.push(grupo);
 
-    renderGruposSeleccionados();
+    renderGruposSeleccionados('containerGruposAsignados', gruposSeleccionados);
 
     $inputAutocompleteGrupos.value = '';
     autocompleteGrupos();
@@ -279,7 +279,7 @@ window.asignarRubricaAGrupo = (idGrupo) => {
 
 window.removeGrupoSeleccionado = (idGrupo) => {
     gruposSeleccionados = gruposSeleccionados.filter(grupo => grupo.id != idGrupo);
-    renderGruposSeleccionados();
+    renderGruposSeleccionados('containerGruposAsignados', gruposSeleccionados);
 }
 
 const showWindowSimularRubrica = () => {
