@@ -27,6 +27,8 @@ const $selectGrupos = document.querySelector('#selectGrupos');
 
 const $btnAddCriterio = document.querySelector('#btnAddCriterio');
 
+const $btnAddCriterioEdit = document.querySelector('#btnAddCriterioEdit');
+
 const $inputAutocompleteGrupos = document.querySelector('#inputAutocompleteGrupos');
 
 const $inputAutocompleteGruposEdit = document.querySelector('#inputAutocompleteGruposEdit');
@@ -233,8 +235,8 @@ window.editarRubrica = async (idRubrica) => {
     });
 }
 
-const addCriterio = () => {
-    const $containerCriterios = document.querySelector('#containerCriterios');
+const addCriterio = (contenedorCriterios) => {
+    const $containerCriterios = document.querySelector(`#${contenedorCriterios}`);
     $containerCriterios.innerHTML += CriterioEditable();
 }
 
@@ -364,8 +366,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 $selectGrupos.addEventListener('change', renderOptionsEstudiantes);
 
-$btnAddCriterio.addEventListener('click', addCriterio);
-
 $inputAutocompleteGrupos.addEventListener('input', autocompleteGrupos);
 
 $inputAutocompleteGruposEdit.addEventListener('input', autocompleteGruposEdit);
+
+$btnAddCriterio.addEventListener('click', () => {
+    addCriterio('containerCriterios');
+});
+
+$btnAddCriterioEdit.addEventListener('click', () => {
+    addCriterio('containerCriteriosEdit');
+});
