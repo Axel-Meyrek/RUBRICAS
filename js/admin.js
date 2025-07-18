@@ -9,6 +9,8 @@ import Rubrica from "../components/Rubrica.js";
 
 import Criterio from "../components/Criterio.js";
 
+import CriterioNuevo from "../components/CriterioNuevo.js";
+
 import CriterioEditable from "../components/CriterioEditable.js";
 
 let administrador = {};
@@ -27,7 +29,11 @@ const $selectGrupos = document.querySelector('#selectGrupos');
 
 const $btnAddCriterio = document.querySelector('#btnAddCriterio');
 
+const $btnSaveEditRubric = document.querySelector('#btnSaveEditRubric');
+
 const $btnAddCriterioEdit = document.querySelector('#btnAddCriterioEdit');
+
+const $buttonSaveNewRubrica = document.querySelector('#buttonSaveNewRubrica');
 
 const $inputAutocompleteGrupos = document.querySelector('#inputAutocompleteGrupos');
 
@@ -237,7 +243,7 @@ window.editarRubrica = async (idRubrica) => {
 
 const addCriterio = (contenedorCriterios) => {
     const $containerCriterios = document.querySelector(`#${contenedorCriterios}`);
-    $containerCriterios.innerHTML += CriterioEditable();
+    $containerCriterios.innerHTML += CriterioNuevo();
 }
 
 const renderGruposSeleccionados = () => {
@@ -356,6 +362,95 @@ const showWindowEditarRubricas = () => {
     $window.classList.add('showWindow');
 }
 
+const recuperarNuevaRubrica = () => {
+    //esto a Rubricas
+    const rubrica = {
+        titulo: document.querySelector('#inputTituloRubrica').value,
+        descripcion: document.querySelector('#inputDescriptionRubrica').value
+    }
+
+    const criterioTitulo = document.querySelectorAll('.criterio_titulo');
+    
+    const criterioPonderacion = document.querySelectorAll('.criterio_ponderacion');
+    
+    const descripcion_se = document.querySelectorAll('.criterio_se');
+    
+    const descripcion_e = document.querySelectorAll('.criterio_e');
+    
+    const descripcion_ae = document.querySelectorAll('.criterio_ae');
+    
+    const descripcion_de = document.querySelectorAll('.criterio_de');
+
+    const criterios = [];
+
+    for(let i = 0; i < criterioTitulo.length; i++) {
+        const criterio = {
+            titulo: criterioTitulo[i].value,
+            ponderacion: criterioPonderacion[i].value,
+            descripcion_se: descripcion_se[i].value,
+            descripcion_e: descripcion_e[i].value,
+            descripcion_ae: descripcion_ae[i].value,
+            descripcion_de: descripcion_de[i].value
+        }
+
+        criterios.push(criterio);
+    }
+
+    vaciarAllInputsCreateRubric();
+}
+
+const vaciarAllInputsCreateRubric = () => {
+    gruposSeleccionados = [];
+
+    document.querySelector('#inputTituloRubrica').value = '';
+
+    document.querySelector('#inputDescriptionRubrica').value = '';
+
+    document.querySelector('#containerGruposAsignados').innerHTML = '';
+
+    document.querySelector('#containerCriterios').innerHTML = CriterioNuevo();
+}
+
+const saveEditRubric = () => {
+    const rubrica = {
+        titulo: document.querySelector('#inputEditTituloRubrica').value,
+        descripcion: document.querySelector('#inputEditDescriptionRubrica').value
+    }
+
+    console.log(rubrica);
+
+    const criterioTitulo = document.querySelectorAll('.criterio_titulo_editable');
+    
+    const criterioPonderacion = document.querySelectorAll('.criterio_ponderacion_editable');
+    
+    const descripcion_se = document.querySelectorAll('.criterio_se_editable');
+    
+    const descripcion_e = document.querySelectorAll('.criterio_e_editable');
+    
+    const descripcion_ae = document.querySelectorAll('.criterio_ae_editable');
+    
+    const descripcion_de = document.querySelectorAll('.criterio_de_editable');
+
+    console.log(criterioTitulo, criterioPonderacion, descripcion_se, descripcion_e, descripcion_ae, descripcion_de);
+
+    const criterios = [];
+
+    for(let i = 0; i < criterioTitulo.length; i++) {
+        const criterio = {
+            titulo: criterioTitulo[i].value,
+            ponderacion: criterioPonderacion[i].value,
+            descripcion_se: descripcion_se[i].value,
+            descripcion_e: descripcion_e[i].value,
+            descripcion_ae: descripcion_ae[i].value,
+            descripcion_de: descripcion_de[i].value
+        }
+
+        criterios.push(criterio);
+    }
+
+    console.log(criterios);
+}
+
 /* EVENTOS */
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -369,6 +464,10 @@ $selectGrupos.addEventListener('change', renderOptionsEstudiantes);
 $inputAutocompleteGrupos.addEventListener('input', autocompleteGrupos);
 
 $inputAutocompleteGruposEdit.addEventListener('input', autocompleteGruposEdit);
+
+$buttonSaveNewRubrica.addEventListener('click', recuperarNuevaRubrica);
+
+$btnSaveEditRubric.addEventListener('click', saveEditRubric);
 
 $btnAddCriterio.addEventListener('click', () => {
     addCriterio('containerCriterios');
