@@ -69,6 +69,13 @@ const showResumenData = async () => {
 
 }
 
+const validarRutaSegura = () =>{
+    const data = JSON.parse(localStorage.getItem('Sesion'));
+    if(!data) {
+        window.location.href = '../pages/login.html';
+    }
+}
+
 const recuperarStorach = () => {
     const data = JSON.parse(localStorage.getItem('Sesion'));
     administrador = data;
@@ -417,7 +424,6 @@ const saveEditRubric = () => {
         descripcion: document.querySelector('#inputEditDescriptionRubrica').value
     }
 
-    console.log(rubrica);
 
     const criterioTitulo = document.querySelectorAll('.criterio_titulo_editable');
     
@@ -431,7 +437,6 @@ const saveEditRubric = () => {
     
     const descripcion_de = document.querySelectorAll('.criterio_de_editable');
 
-    console.log(criterioTitulo, criterioPonderacion, descripcion_se, descripcion_e, descripcion_ae, descripcion_de);
 
     const criterios = [];
 
@@ -448,11 +453,12 @@ const saveEditRubric = () => {
         criterios.push(criterio);
     }
 
-    console.log(criterios);
 }
 
 /* EVENTOS */
 document.addEventListener('DOMContentLoaded', () => {
+
+    validarRutaSegura();
     
     recuperarStorach();
 
