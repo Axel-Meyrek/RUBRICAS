@@ -13,6 +13,8 @@ import CriterioNuevo from "../components/CriterioNuevo.js";
 
 import CriterioEditable from "../components/CriterioEditable.js";
 
+import CriterioHola from "../components/CriterioHola.js";
+
 let administrador = {};
 
 let rubricas = [];
@@ -25,7 +27,11 @@ let gruposSeleccionados = [];
 
 let gruposSeleccionadosEdit = [];
 
+const $fileInput = document.querySelector('#fileInput');
+
 const $selectGrupos = document.querySelector('#selectGrupos');
+
+const $btnCargarExcel = document.querySelector('#btnCargarExcel');
 
 const $btnAddCriterio = document.querySelector('#btnAddCriterio');
 
@@ -36,6 +42,7 @@ const $btnAddCriterioEdit = document.querySelector('#btnAddCriterioEdit');
 const $buttonSaveNewRubrica = document.querySelector('#buttonSaveNewRubrica');
 
 const $inputAutocompleteGrupos = document.querySelector('#inputAutocompleteGrupos');
+
 
 const $inputAutocompleteGruposEdit = document.querySelector('#inputAutocompleteGruposEdit');
 
@@ -71,14 +78,15 @@ const showResumenData = async () => {
 
 const validarRutaSegura = () =>{
     const data = JSON.parse(localStorage.getItem('Sesion'));
-    if(!data) {
+    if(!data || !data.usuario || data.tipo !== 'administrador') {
         window.location.href = '../pages/login.html';
+        localStorage.removeItem('Sesion');
     }
 }
 
 const recuperarStorach = () => {
     const data = JSON.parse(localStorage.getItem('Sesion'));
-    administrador = data;
+    administrador = data.usuario;
 }
 
 const recuperarRubricas = async () => {
@@ -222,7 +230,7 @@ window.simularRubrica = async (idRubrica) => {
 
     criterios.forEach((criterio, iterador) => {
         const {ponderacion, titulo, descripcion_se, descripcion_e, descripcion_ae, descripcion_de} = criterio;
-        $containerQuestions.innerHTML += Criterio(iterador, ponderacion, titulo, descripcion_se, descripcion_e, descripcion_ae, descripcion_de);
+        $containerQuestions.innerHTML += CriterioHola(iterador, ponderacion, titulo, descripcion_se, descripcion_e, descripcion_ae, descripcion_de);
     });
 }
 
@@ -403,6 +411,10 @@ const recuperarNuevaRubrica = () => {
         criterios.push(criterio);
     }
 
+
+    console.log(rubrica);
+    console.log(criterios);
+    console.log(gruposSeleccionados);
     vaciarAllInputsCreateRubric();
 }
 
@@ -455,6 +467,57 @@ const saveEditRubric = () => {
 
 }
 
+const cargarExcel = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+    const data = new Uint8Array(e.target.result);
+    const workbook = XLSX.read(data, { type: 'array' });
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+    const json = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+
+    setNewGrupo(json);
+    };
+
+    reader.readAsArrayBuffer(file);
+}
+
+const setNewGrupo = async (datos) => {
+  try {
+    const response = await fetch("../api/setNewGrupo.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datos),
+    });
+
+    const contentType = response.headers.get("content-type") || "";
+
+    const text = await response.text();
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}\nRespuesta: ${text}`);
+    }
+
+    if (contentType.includes("application/json")) {
+      const data = JSON.parse(text);
+      console.log(data);
+      return data;
+    } else {
+      // No es JSON, mostrar el texto para depurar
+      console.warn("Respuesta no es JSON:", text);
+      throw new Error("Respuesta no es JSON válida");
+    }
+  } catch (error) {
+    console.error("Error al enviar datos:", error);
+    throw error;
+  }
+}
+
+
+
 /* EVENTOS */
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -474,6 +537,12 @@ $inputAutocompleteGruposEdit.addEventListener('input', autocompleteGruposEdit);
 $buttonSaveNewRubrica.addEventListener('click', recuperarNuevaRubrica);
 
 $btnSaveEditRubric.addEventListener('click', saveEditRubric);
+
+$btnCargarExcel.addEventListener('click', () => $fileInput.click());
+
+$fileInput.addEventListener('change', cargarExcel);
+
+
 
 $btnAddCriterio.addEventListener('click', () => {
     addCriterio('containerCriterios');

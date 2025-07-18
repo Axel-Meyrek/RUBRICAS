@@ -63,7 +63,7 @@ const recuperarUser = async e => {
         return;
     }
 
-    saveSessionInLocalStorach(data.usuario);
+    saveSessionInLocalStorach(data);
 
     redirectionUser(data.tipo);
 }

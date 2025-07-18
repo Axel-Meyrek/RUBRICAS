@@ -81,6 +81,14 @@ svg {
     scale: 1.03;
 }
 
+.question_buttonCalification.selected {
+    background-color: #2563eb; /* o la clase de Tailwind 'bg-blue-600' */
+    color: white;
+    font-weight: bold;
+    border-radius: 0.5rem;
+}
+
+
 
 @media (width < 880px) {
     :root {

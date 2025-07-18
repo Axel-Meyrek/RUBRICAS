@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <!-- JAVASCRIPT -->
     <script src="../js/utils.js" defer></script>
-    <script src="../js/profesor.js" defer></script>
+    <script src="../js/profesor.js" defer type="module"></script>
     <!-- GENERAL -->
     <title>Profesor - Rubricas</title>
 </head>
@@ -34,11 +34,6 @@
         <button class="nav_item buttonNavigate">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8.154 9.116q-.213 0-.356-.144t-.144-.357t.144-.356t.356-.143H19.5q.213 0 .356.143q.144.144.144.357t-.144.356t-.356.144zm0 3.384q-.213 0-.356-.144t-.144-.357t.144-.356t.356-.143H19.5q.213 0 .356.144t.144.357t-.144.356t-.356.143zm0 3.385q-.213 0-.356-.144q-.144-.144-.144-.357t.144-.356t.356-.144H19.5q.213 0 .356.145t.144.356t-.144.356t-.356.144zM4.616 9.23q-.262 0-.439-.183Q4 8.866 4 8.596q0-.253.177-.424Q4.354 8 4.616 8q.261 0 .438.172q.177.17.177.424q0 .27-.177.452q-.177.183-.439.183m0 3.365q-.261 0-.438-.171T4 12q0-.29.177-.462t.439-.173t.438.172t.177.463q0 .253-.177.425t-.439.171m0 3.404q-.261 0-.438-.182Q4 15.635 4 15.366q0-.254.177-.425q.177-.172.439-.172q.261 0 .438.172t.177.425q0 .269-.177.452q-.177.182-.439.182"/></svg>
             Mis Rubricas
-        </button>       
-
-        <button class="nav_item buttonNavigate">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256"><path fill="currentColor" d="m225.9 58.31l-96-32a6 6 0 0 0-3.8 0l-96 32A6 6 0 0 0 26 64v80a6 6 0 0 0 12 0V72.32l38.68 12.9A62 62 0 0 0 99 174.75c-19.25 6.53-36 19.59-48 38a6 6 0 0 0 10 6.53C76.47 195.59 100.88 182 128 182s51.53 13.59 67 37.28a6 6 0 0 0 10-6.56c-12-18.38-28.73-31.44-48-38a62 62 0 0 0 22.27-89.53l46.63-15.5a6 6 0 0 0 0-11.38M178 120a50 50 0 1 1-89.37-30.8l37.47 12.49a6 6 0 0 0 3.8 0l37.47-12.49A49.78 49.78 0 0 1 178 120m-50-30.32L51 64l77-25.68L205 64Z"/></svg>
-            Mis Estudiantes
         </button>
     </nav>
 
@@ -172,8 +167,8 @@
         </section>
 
 
-        <!-- COMPLETAR RUBRICA -->
-        <section id="CompletarRubrica" class="completarRubrica window">
+        <!-- EVALUAR RUBRICA -->
+        <section id="EvaluarRubrica" class="completarRubrica window">
             <button class="completarRubrica_button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 1024 1024"><path fill="currentColor" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64"/><path fill="currentColor" d="m237.248 512l265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312z"/></svg>
                 Volver a la lista
@@ -181,8 +176,8 @@
 
             
             
-            <h2 id="tituloRubrica" class="completarRubrica_title">Trabajo Escrito</h2>
-            <p id="descripcionRubrica" class="completarRubrica_description">Evaluación de trabajo escrito académico</p>
+            <h2 id="rubricaTitulo" class="completarRubrica_title">Trabajo Escrito</h2>
+            <p id="rubricaDescripcion" class="completarRubrica_description">Evaluación de trabajo escrito académico</p>
 
             <!-- SELECT USER -->
             <div class="completarRubrica_selectUser">
@@ -245,39 +240,12 @@
                 </article>
             </div>
 
-            <button class="question_saveResponses">
+            <butto id="buttonSaveEvaluacion" class="question_saveResponses">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20 7.423v10.962q0 .69-.462 1.153T18.384 20H5.616q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h10.961zm-1 .427L16.15 5H5.616q-.27 0-.443.173T5 5.616v12.769q0 .269.173.442t.443.173h12.769q.269 0 .442-.173t.173-.443zm-7 8.688q.827 0 1.414-.586T14 14.538t-.587-1.413T12 12.539t-1.413.586T10 14.538t.587 1.414t1.413.586M6.77 9.77h7.422v-3H6.77zM5 7.85V19V5z"/></svg>
                 Guardar Evaluación
-            </button>
+            </butto>
         </section>
 
-
-        <!-- MIS ESTUDIANTES -->
-        <section id="MisEstudiantes" class="misEstudiantes window">
-
-            <h2 class="misEstudiantes_title">Gestion de Estudiantes</h2>
-
-            <h3 class="misEstudiantes_subtitle">Grupos:</h3>
-            <div id="containerGrupos" class="containerGrupos">
-                <!-- GRUPO -->
-                <!-- <article class="grupo">
-                    <p class="grupo_name">Grupo A</p>
-                </article> -->
-            </div>
-            <h3 class="misEstudiantes_subtitle">Estudiantes:</h3>
-            <div id="containerEstudiantes" class="containerEstudiantes">
-                <!-- ESTUDIANTE -->
-               <!-- <article class="estudiante">
-                    <p class="estudiante_name">Juan Carlos David</p>
-                    <div class="estudiante_botonera">
-                        <button class="estudiante_buttonEvaluar">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m9.55 17.308l-4.97-4.97l.714-.713l4.256 4.256l9.156-9.156l.713.714z"/></svg>
-                            Evaluar
-                        </button>
-                    </div>
-                </article> -->
-            </div>
-        </section>
         
     </main>
 </body>

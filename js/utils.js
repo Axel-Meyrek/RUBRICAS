@@ -49,7 +49,7 @@ const desactiveMenu = () => {
 
 const cerraSession = () => {
     localStorage.removeItem('Sesion');
-    window.location.href = '../pages/login.html';
+    window.location.href = '../index.html';
 }
 
 /* EVENTOS */

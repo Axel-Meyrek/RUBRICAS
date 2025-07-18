@@ -19,6 +19,8 @@
     <!-- JAVASCRIPT -->
     <script src="../js/utils.js" defer></script>
     <script src="../js/admin.js" defer type="module"></script>
+    <!-- LIBRERIA XLSX -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <!-- GENERAL -->
     <title>Administrador - Rubricas</title>
 </head>
@@ -246,9 +248,10 @@
             <div class="misEstudiantes_flex">
                 <h2 class="misEstudiantes_title">Gestion de Estudiantes</h2>
                 <div class="misEstudiantes_botonera">
-                    <button class="buttonCallToAction">
+                    <button id="btnCargarExcel" class="buttonCallToAction">
                         Nuevo Grupo
                     </button>
+                    <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" style="display: none;" />
                 </div>
             </div>
             <h3 class="misEstudiantes_subtitle">Grupos:</h3>
