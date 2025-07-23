@@ -82,3 +82,13 @@ $buttonLogin.addEventListener('click', recuperarUser);
 $id.addEventListener('input', removeErrorInput);
 
 $password.addEventListener('input', removeErrorInput);
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const sesion = localStorage.getItem('Sesion');
+    if(sesion) {
+        const data = JSON.parse(sesion);
+        redirectionUser(data.tipo);
+    }
+    
+});
