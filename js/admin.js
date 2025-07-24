@@ -21,6 +21,8 @@ let profesores = [];
 
 let grupos = [];
 
+let idRubricaEditar = null;
+
 const $fileInput = document.querySelector('#fileInput');
 
 const $selectGrupos = document.querySelector('#selectGrupos');
@@ -163,6 +165,30 @@ const enviarCriterios = async (criterios) => {
     await fetch(URL, options);
 };
 
+const actualizarRubrica = async (id_rubrica, titulo, descripcion) => {
+    const URL = '../api/updateRubrica.php';
+    const options = {
+        method: 'POST',
+        body: JSON.stringify({ id_rubrica, titulo, descripcion }),
+        headers: { 'Content-Type': 'application/json' }
+    };
+    const response = await fetch(URL, options);
+    const data = await response.json();
+    return data;
+};
+
+const actualizarCriterios = async (criterios) => {
+    const URL = '../api/updateCriterios.php';
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(criterios),
+        headers: { 'Content-Type': 'application/json' }
+    };
+    const response = await fetch(URL, options);
+    const data = await response.json();
+    return data;
+};
+
 const renderRubricasRecientes = () => {
     const $resumenRubricaContainer = document.querySelector('#resumenRubricaContainer');
 
@@ -260,10 +286,11 @@ window.simularRubrica = async (idRubrica) => {
 }
 
 window.editarRubrica = async (idRubrica) => {
+    idRubricaEditar = idRubrica;
+
     showWindow('#EditarRubrica');
 
     const rubrica = rubricas.find(rubrica => rubrica.id == idRubrica);
-    console.log(rubrica);
 
     document.querySelector('#inputEditTituloRubrica').value = rubrica.titulo;
     document.querySelector('#inputEditDescriptionRubrica').value = rubrica.descripcion;
@@ -274,8 +301,8 @@ window.editarRubrica = async (idRubrica) => {
     $containerCriteriosEdit.innerHTML = '';
 
     criterios.forEach( (criterio, iterador)=> {
-        const {titulo, ponderacion, descripcion_se, descripcion_e, descripcion_ae, descripcion_de} = criterio;
-        $containerCriteriosEdit.innerHTML += CriterioEditable(iterador, titulo, ponderacion, descripcion_se, descripcion_e, descripcion_ae, descripcion_de);
+        const {id, titulo, ponderacion, descripcion_se, descripcion_e, descripcion_ae, descripcion_de} = criterio;
+        $containerCriteriosEdit.innerHTML += CriterioEditable(id, iterador, titulo, ponderacion, descripcion_se, descripcion_e, descripcion_ae, descripcion_de);
     });
 }
 
@@ -311,7 +338,6 @@ const recuperarNuevaRubrica = async () => {
     const criterios = [];
 
     const data = await enviarNuevaRubrica(rubrica.titulo, rubrica.descripcion);
-    console.log(data.id_rubrica);
 
     //actualizar el local
     rubrica.id = data.id_rubrica;
@@ -343,7 +369,66 @@ const recuperarNuevaRubrica = async () => {
     renderRubricas();
 }
 
+const guardarRubricaEditada = async (idRubrica) => {
+    const nuevosCriterios = [];
 
+    const rubrica = {
+        titulo: document.querySelector('#inputEditTituloRubrica').value,
+        descripcion: document.querySelector('#inputEditDescriptionRubrica').value,
+        id: idRubrica
+    }
+
+    //actualizar el local
+    const index = rubricas.findIndex(rubrica => rubrica.id == idRubrica);
+    rubricas[index].titulo = rubrica.titulo;
+    rubricas[index].descripcion = rubrica.descripcion;
+
+
+    await actualizarRubrica(rubrica.id, rubrica.titulo, rubrica.descripcion);
+
+    const criterioTitulo = document.querySelectorAll('.criterio_titulo_editable');
+
+    const criterioPonderacion = document.querySelectorAll('.criterio_ponderacion_editable');
+
+    const criterioId = document.querySelectorAll('.criterio_id_editable');
+
+    const descripcion_se = document.querySelectorAll('.criterio_se_editable');
+
+    const descripcion_e = document.querySelectorAll('.criterio_e_editable');
+
+    const descripcion_ae = document.querySelectorAll('.criterio_ae_editable');
+
+    const descripcion_de = document.querySelectorAll('.criterio_de_editable');
+
+    const criterios = [];
+
+    for(let i = 0; i < criterioTitulo.length; i++) {
+        
+        const criterio = {
+            id: criterioId[i].value,
+            titulo: criterioTitulo[i].value,
+            ponderacion: criterioPonderacion[i].value,
+            descripcion_se: descripcion_se[i].value,
+            descripcion_e: descripcion_e[i].value,
+            descripcion_ae: descripcion_ae[i].value,
+            descripcion_de: descripcion_de[i].value
+        }
+
+        if (parseInt(criterioId[i].value) === -1) {
+            nuevosCriterios.push(criterio);
+        }else{
+            criterios.push(criterio);
+        }
+    }
+
+    await actualizarCriterios(criterios);
+
+    await enviarCriterios(nuevosCriterios);
+
+    renderRubricas();
+
+    showWindow('#MisRubricas');
+}
 
 const cargarExcel = e => {
     const file = e.target.files[0];
@@ -383,6 +468,10 @@ $btnAddCriterio.addEventListener('click', () => {
 
 $btnAddCriterioEdit.addEventListener('click', () => {
     addCriterio('containerCriteriosEdit');
+});
+
+$btnSaveEditRubric.addEventListener('click', () => {
+   guardarRubricaEditada(idRubricaEditar);
 });
 
 $selectGrupos.addEventListener('change', renderOptionsEstudiantes);
