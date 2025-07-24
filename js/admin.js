@@ -7,13 +7,11 @@ import Estudiante from "../components/Estudiante.js";
 
 import Rubrica from "../components/Rubrica.js";
 
-import Criterio from "../components/Criterio.js";
-
 import CriterioNuevo from "../components/CriterioNuevo.js";
 
 import CriterioEditable from "../components/CriterioEditable.js";
 
-import CriterioHola from "../components/CriterioHola.js";
+import CriterioSimulado from "../components/CriterioSimulado.js";
 
 let administrador = {};
 
@@ -22,10 +20,6 @@ let rubricas = [];
 let profesores = [];
 
 let grupos = [];
-
-let gruposSeleccionados = [];
-
-let gruposSeleccionadosEdit = [];
 
 const $fileInput = document.querySelector('#fileInput');
 
@@ -40,11 +34,6 @@ const $btnSaveEditRubric = document.querySelector('#btnSaveEditRubric');
 const $btnAddCriterioEdit = document.querySelector('#btnAddCriterioEdit');
 
 const $buttonSaveNewRubrica = document.querySelector('#buttonSaveNewRubrica');
-
-const $inputAutocompleteGrupos = document.querySelector('#inputAutocompleteGrupos');
-
-
-const $inputAutocompleteGruposEdit = document.querySelector('#inputAutocompleteGruposEdit');
 
 /* FUNCIONES */
 
@@ -74,6 +63,12 @@ const showResumenData = async () => {
 
     renderRubricas();
 
+}
+
+const showWindow = (selector) => {
+    hiddenAllWindows();
+    const $window = document.querySelector(selector);
+    $window.classList.add('showWindow');
 }
 
 const validarRutaSegura = () =>{
@@ -146,6 +141,28 @@ const recuperarGruposConRubricaAsignada = async (idRubrica) => {
     return data;
 }
 
+const enviarNuevaRubrica = async (titulo, descripcion) => {
+    const URL = '../api/setRubrica.php';
+    const options = {
+        method: 'POST',
+        body: JSON.stringify({ titulo, descripcion }),
+        headers: { 'Content-Type': 'application/json' }
+    };
+    const response = await fetch(URL, options);
+    const data = await response.json();
+    return data;
+};
+
+const enviarCriterios = async (criterios) => {
+    const URL = '../api/setCriterios.php';
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(criterios),
+        headers: { 'Content-Type': 'application/json' }
+    };
+    await fetch(URL, options);
+};
+
 const renderRubricasRecientes = () => {
     const $resumenRubricaContainer = document.querySelector('#resumenRubricaContainer');
 
@@ -162,7 +179,7 @@ const renderGrupos = () => {
     grupos.forEach(grupo => {
         const {id, nombre} = grupo;
         $containerGrupos.innerHTML += Grupo(id, nombre);
-    })
+    });
 }
 
 window.renderEstudiantes = async (idGrupo) => {
@@ -212,17 +229,25 @@ const renderOptionsEstudiantes = async () => {
 }
 
 window.simularRubrica = async (idRubrica) => {
-    showWindowSimularRubrica();
+    showWindow('#CompletarRubrica');
     
     const rubrica = rubricas.find(rubrica => rubrica.id == idRubrica);
     
     document.querySelector('#rubricaTitulo').textContent = rubrica.titulo;
     document.querySelector('#rubricaDescripcion').textContent = rubrica.descripcion;
 
-    await renderOptionsGrupos(idRubrica);
+    try {
+        await renderOptionsGrupos(idRubrica);
+    } catch (error) {
+        console.error(error);
+    }
 
-    await renderOptionsEstudiantes();
-    
+    try {
+        await renderOptionsEstudiantes();        
+    } catch (error) {
+        console.error(error);
+    }
+
     const criterios = await recuperarCriterios(idRubrica) || [];
     
     const $containerQuestions = document.querySelector('#containerQuestions');
@@ -230,20 +255,18 @@ window.simularRubrica = async (idRubrica) => {
 
     criterios.forEach((criterio, iterador) => {
         const {ponderacion, titulo, descripcion_se, descripcion_e, descripcion_ae, descripcion_de} = criterio;
-        $containerQuestions.innerHTML += CriterioHola(iterador, ponderacion, titulo, descripcion_se, descripcion_e, descripcion_ae, descripcion_de);
+        $containerQuestions.innerHTML += CriterioSimulado(iterador, ponderacion, titulo, descripcion_se, descripcion_e, descripcion_ae, descripcion_de);
     });
 }
 
 window.editarRubrica = async (idRubrica) => {
-    showWindowEditarRubricas();
+    showWindow('#EditarRubrica');
 
     const rubrica = rubricas.find(rubrica => rubrica.id == idRubrica);
+    console.log(rubrica);
 
     document.querySelector('#inputEditTituloRubrica').value = rubrica.titulo;
     document.querySelector('#inputEditDescriptionRubrica').value = rubrica.descripcion;
-
-    gruposSeleccionadosEdit = await recuperarGruposConRubricaAsignada(idRubrica);
-    renderGruposSeleccionadosEdit();
 
     const criterios = await recuperarCriterios(idRubrica) || [];
 
@@ -258,127 +281,16 @@ window.editarRubrica = async (idRubrica) => {
 
 const addCriterio = (contenedorCriterios) => {
     const $containerCriterios = document.querySelector(`#${contenedorCriterios}`);
-    $containerCriterios.innerHTML += CriterioNuevo();
+    $containerCriterios.insertAdjacentHTML('beforeend', CriterioNuevo());
 }
 
-const renderGruposSeleccionados = () => {
-    const $containerGruposAsignados = document.querySelector('#containerGruposAsignados');
-    $containerGruposAsignados.innerHTML = '';
-
-    gruposSeleccionados.forEach(grupo => {
-        const {id, nombre} = grupo;
-        $containerGruposAsignados.innerHTML += /* html */
-            `<article class="grupoSeleccionado">
-                <p class="grupoSeleccionado_nombre">${nombre}</p>
-                <button onclick="removeGrupoSeleccionado(${id})" class="grupoSeleccionado_button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"/></svg>
-                </button>
-            </article>`;
-    });
+const vaciarAllInputsCreateRubric = () => {
+    document.querySelector('#inputTituloRubrica').value = '';
+    document.querySelector('#inputDescriptionRubrica').value = '';
+    document.querySelector('#containerCriterios').innerHTML = CriterioNuevo();
 }
 
-const renderGruposSeleccionadosEdit = () => {
-    const $containerGruposAsignadosEdit = document.querySelector('#containerGruposAsignadosEdit');
-    $containerGruposAsignadosEdit.innerHTML = '';
-
-    gruposSeleccionadosEdit.forEach(grupo => {
-        const {id, nombre} = grupo;
-        $containerGruposAsignadosEdit.innerHTML += /* html */
-            `<article class="grupoSeleccionado">
-                <p class="grupoSeleccionado_nombre">${nombre}</p>
-                <button onclick="removeGrupoSeleccionadoEdit(${id})" class="grupoSeleccionado_button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"/></svg>
-                </button>
-            </article>`;
-    });
-}
-
-const autocompleteGrupos = () => {
-    const $containerGruposAutocomplete = document.querySelector('#containerGruposAutocomplete');
-    if($inputAutocompleteGrupos.value === ''){
-        $containerGruposAutocomplete.innerHTML = '';
-        return;
-    } 
-
-    const value = $inputAutocompleteGrupos.value.toLowerCase();
-    const filtrados = grupos.filter(grupo => grupo.nombre.toLowerCase().includes(value));
-
-    $containerGruposAutocomplete.innerHTML = '';
-    filtrados.forEach(grupoFiltrado => {
-        const {id, nombre} = grupoFiltrado;
-        $containerGruposAutocomplete.innerHTML += `<article onclick="asignarRubricaAGrupo(${id})" class="autocomplete_option">${nombre}</article>`;
-    });
-}
-
-const autocompleteGruposEdit = () => {
-    const $containerGruposAutocompleteEdit = document.querySelector('#containerGruposAutocompleteEdit');
-    if($inputAutocompleteGruposEdit.value === ''){
-        $containerGruposAutocompleteEdit.innerHTML = '';
-        return;
-    } 
-
-    const value = $inputAutocompleteGruposEdit.value.toLowerCase();
-    const filtrados = grupos.filter(grupo => grupo.nombre.toLowerCase().includes(value));
-
-    $containerGruposAutocompleteEdit.innerHTML = '';
-    filtrados.forEach(grupoFiltrado => {
-        const {id, nombre} = grupoFiltrado;
-        $containerGruposAutocompleteEdit.innerHTML += `<article onclick="asignarRubricaAGrupoEdit(${id})" class="autocomplete_option">${nombre}</article>`;
-    });
-}
-
-window.asignarRubricaAGrupo = (idGrupo) => {
-    const isValidate = gruposSeleccionados.find(grupo => grupo.id == idGrupo);
-    if(isValidate) return;
-
-    const grupo = grupos.find(grupo => grupo.id == idGrupo);
-    gruposSeleccionados.push(grupo);
-
-    renderGruposSeleccionados();
-
-    $inputAutocompleteGrupos.value = '';
-    autocompleteGrupos();
-}
-
-window.asignarRubricaAGrupoEdit = (idGrupo) => {
-    const isValidate = gruposSeleccionadosEdit.find(grupo => grupo.id == idGrupo);
-    if(isValidate) return;
-
-    const grupo = grupos.find(grupo => grupo.id == idGrupo);
-    gruposSeleccionadosEdit.push(grupo);
-
-    renderGruposSeleccionadosEdit();
-
-    $inputAutocompleteGruposEdit.value = '';
-    autocompleteGruposEdit();
-}
-
-window.removeGrupoSeleccionado = (idGrupo) => {
-    gruposSeleccionados = gruposSeleccionados.filter(grupo => grupo.id != idGrupo);
-    renderGruposSeleccionados();
-}
-
-window.removeGrupoSeleccionadoEdit = (idGrupo) => {
-    gruposSeleccionadosEdit = gruposSeleccionadosEdit.filter(grupo => grupo.id != idGrupo);
-    renderGruposSeleccionadosEdit();
-}
-
-const showWindowSimularRubrica = () => {
-    hiddenAllWindows();
-    const selector = '#CompletarRubrica';
-    const $window = document.querySelector(selector);
-    $window.classList.add('showWindow');
-}
-
-const showWindowEditarRubricas = () => {
-    hiddenAllWindows();
-    const selector = '#EditarRubrica';
-    const $window = document.querySelector(selector);
-    $window.classList.add('showWindow');
-}
-
-const recuperarNuevaRubrica = () => {
-    //esto a Rubricas
+const recuperarNuevaRubrica = async () => {
     const rubrica = {
         titulo: document.querySelector('#inputTituloRubrica').value,
         descripcion: document.querySelector('#inputDescriptionRubrica').value
@@ -398,74 +310,40 @@ const recuperarNuevaRubrica = () => {
 
     const criterios = [];
 
+    const data = await enviarNuevaRubrica(rubrica.titulo, rubrica.descripcion);
+    console.log(data.id_rubrica);
+
+    //actualizar el local
+    rubrica.id = data.id_rubrica;
+    rubricas.push(rubrica);
+
+
     for(let i = 0; i < criterioTitulo.length; i++) {
         const criterio = {
             titulo: criterioTitulo[i].value,
             ponderacion: criterioPonderacion[i].value,
+            id_rubrica: rubrica.id,
             descripcion_se: descripcion_se[i].value,
             descripcion_e: descripcion_e[i].value,
             descripcion_ae: descripcion_ae[i].value,
             descripcion_de: descripcion_de[i].value
         }
-
         criterios.push(criterio);
     }
 
 
-    console.log(rubrica);
-    console.log(criterios);
-    console.log(gruposSeleccionados);
+    await enviarCriterios(criterios);
+
     vaciarAllInputsCreateRubric();
+
+    showWindow('#MisRubricas'); 
+    
+    renderRubricasRecientes();
+
+    renderRubricas();
 }
 
-const vaciarAllInputsCreateRubric = () => {
-    gruposSeleccionados = [];
 
-    document.querySelector('#inputTituloRubrica').value = '';
-
-    document.querySelector('#inputDescriptionRubrica').value = '';
-
-    document.querySelector('#containerGruposAsignados').innerHTML = '';
-
-    document.querySelector('#containerCriterios').innerHTML = CriterioNuevo();
-}
-
-const saveEditRubric = () => {
-    const rubrica = {
-        titulo: document.querySelector('#inputEditTituloRubrica').value,
-        descripcion: document.querySelector('#inputEditDescriptionRubrica').value
-    }
-
-
-    const criterioTitulo = document.querySelectorAll('.criterio_titulo_editable');
-    
-    const criterioPonderacion = document.querySelectorAll('.criterio_ponderacion_editable');
-    
-    const descripcion_se = document.querySelectorAll('.criterio_se_editable');
-    
-    const descripcion_e = document.querySelectorAll('.criterio_e_editable');
-    
-    const descripcion_ae = document.querySelectorAll('.criterio_ae_editable');
-    
-    const descripcion_de = document.querySelectorAll('.criterio_de_editable');
-
-
-    const criterios = [];
-
-    for(let i = 0; i < criterioTitulo.length; i++) {
-        const criterio = {
-            titulo: criterioTitulo[i].value,
-            ponderacion: criterioPonderacion[i].value,
-            descripcion_se: descripcion_se[i].value,
-            descripcion_e: descripcion_e[i].value,
-            descripcion_ae: descripcion_ae[i].value,
-            descripcion_de: descripcion_de[i].value
-        }
-
-        criterios.push(criterio);
-    }
-
-}
 
 const cargarExcel = e => {
     const file = e.target.files[0];
@@ -479,42 +357,13 @@ const cargarExcel = e => {
     const worksheet = workbook.Sheets[sheetName];
     const json = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
 
-    setNewGrupo(json);
+    console.log(json);
     };
 
     reader.readAsArrayBuffer(file);
 }
 
-const setNewGrupo = async (datos) => {
-  try {
-    const response = await fetch("../api/setNewGrupo.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(datos),
-    });
 
-    const contentType = response.headers.get("content-type") || "";
-
-    const text = await response.text();
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}\nRespuesta: ${text}`);
-    }
-
-    if (contentType.includes("application/json")) {
-      const data = JSON.parse(text);
-      console.log(data);
-      return data;
-    } else {
-      // No es JSON, mostrar el texto para depurar
-      console.warn("Respuesta no es JSON:", text);
-      throw new Error("Respuesta no es JSON válida");
-    }
-  } catch (error) {
-    console.error("Error al enviar datos:", error);
-    throw error;
-  }
-}
 
 
 
@@ -526,23 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
     recuperarStorach();
 
     showResumenData();
-}); 
-
-$selectGrupos.addEventListener('change', renderOptionsEstudiantes);
-
-$inputAutocompleteGrupos.addEventListener('input', autocompleteGrupos);
-
-$inputAutocompleteGruposEdit.addEventListener('input', autocompleteGruposEdit);
-
-$buttonSaveNewRubrica.addEventListener('click', recuperarNuevaRubrica);
-
-$btnSaveEditRubric.addEventListener('click', saveEditRubric);
-
-$btnCargarExcel.addEventListener('click', () => $fileInput.click());
-
-$fileInput.addEventListener('change', cargarExcel);
-
-
+});
 
 $btnAddCriterio.addEventListener('click', () => {
     addCriterio('containerCriterios');
@@ -551,3 +384,11 @@ $btnAddCriterio.addEventListener('click', () => {
 $btnAddCriterioEdit.addEventListener('click', () => {
     addCriterio('containerCriteriosEdit');
 });
+
+$selectGrupos.addEventListener('change', renderOptionsEstudiantes);
+
+$buttonSaveNewRubrica.addEventListener('click', recuperarNuevaRubrica);
+
+$btnCargarExcel.addEventListener('click', () => $fileInput.click());
+
+$fileInput.addEventListener('change', cargarExcel);
