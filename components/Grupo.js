@@ -1,8 +1,8 @@
-const Grupo = (id, nombre) => {
+const Grupo = (id) => {
     return (
         /* html */
-        `<article onclick="renderEstudiantes(${id})" class="grupo">
-                <p class="grupo_name">${nombre}</p>
+        `<article onclick="renderEstudiantes('${id}')" class="grupo">
+                <p class="grupo_name">${id}</p>
             </article>`
         );
 }

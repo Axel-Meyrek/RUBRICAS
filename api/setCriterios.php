@@ -11,7 +11,7 @@
     }
 
     $stmt = $conexion->prepare("
-        INSERT INTO Criterios 
+        INSERT INTO G_Criterios 
         (titulo, ponderacion, id_rubrica, descripcion_se, descripcion_e, descripcion_ae, descripcion_de) 
         VALUES (?, ?, ?, ?, ?, ?, ?)
     ");

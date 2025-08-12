@@ -22,7 +22,7 @@ foreach ($data as $item) {
     $correo_evaluador = $conexion->real_escape_string($item["CORREO EVALUADOR"]);
 
     // INSERTAR o IGNORAR al profesor
-    $query_profesor = "INSERT IGNORE INTO Profesores (id, nombre, email) VALUES ('$id_evaluador', '$nombre_evaluador', '$correo_evaluador')";
+    $query_profesor = "INSERT IGNORE INTO G_Profesores (id, nombre, email) VALUES ('$id_evaluador', '$nombre_evaluador', '$correo_evaluador')";
     $conexion->query($query_profesor);
 
     // INSERTAR o IGNORAR el grupo (si no existe ya)
@@ -30,7 +30,7 @@ foreach ($data as $item) {
     $conexion->query($query_grupo);
 
     // INSERTAR al estudiante
-    $query_estudiante = "INSERT INTO Estudiantes (id, matricula, nombre, grupo) VALUES ('$id_alumno', '$matricula', '$nombre_alumno', '$grupo')
+    $query_estudiante = "INSERT INTO G_Estudiantes (id, matricula, nombre, grupo) VALUES ('$id_alumno', '$matricula', '$nombre_alumno', '$grupo')
                          ON DUPLICATE KEY UPDATE nombre='$nombre_alumno'";
     $conexion->query($query_estudiante);
 }

@@ -12,7 +12,7 @@
 
     // Preparamos la consulta para reutilizarla
     $stmt = $conexion->prepare("
-        UPDATE Criterios 
+        UPDATE G_Criterios 
         SET titulo = ?, 
             ponderacion = ?, 
             descripcion_se = ?, 

@@ -5,12 +5,17 @@
 
     $id_rubrica = $params["id_rubrica"];
 
+    if ($id_rubrica === null) {
+        die("El ID de la rúbrica no fue proporcionado.");
+    }
+
+
     $query = /* MySql */
-        "SELECT DISTINCT Grupos.*
-        FROM Rubrica_Estudiante
-        JOIN Estudiantes ON Estudiantes.id = Rubrica_Estudiante.id_estudiante
-        JOIN Grupos ON Estudiantes.id_grupo = Grupos.id
-        WHERE Rubrica_Estudiante.id_rubrica = $id_rubrica;";
+        "SELECT DISTINCT G_Grupos.*
+        FROM G_Rubrica_Estudiante
+        JOIN G_Estudiantes ON G_Estudiantes.id = G_Rubrica_Estudiante.id_estudiante
+        JOIN G_Grupos ON G_Estudiantes.id_grupo = G_Grupos.id
+        WHERE G_Rubrica_Estudiante.id_rubrica = $id_rubrica;";
 
 
     $resultado = mysqli_query($conexion, $query);

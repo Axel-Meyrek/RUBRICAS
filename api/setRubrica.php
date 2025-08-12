@@ -13,7 +13,7 @@
         exit;
     }
 
-    $stmt = $conexion->prepare("INSERT INTO Rubricas (titulo, descripcion) VALUES (?, ?)");
+    $stmt = $conexion->prepare("INSERT INTO G_Rubricas (titulo, descripcion) VALUES (?, ?)");
     $stmt->bind_param("ss", $titulo, $descripcion);
 
     if ($stmt->execute()) {

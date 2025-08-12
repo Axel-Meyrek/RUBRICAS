@@ -1,0 +1,73 @@
+.popover {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 24px 32px;
+    border-radius: 5px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    overflow-y: scroll;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.oculto {
+    display: none;
+}
+
+.fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 999;
+}
+
+.fondo.oculto {
+    display: none;
+}
+
+.containerRubricSelect {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.containerRubricSelect .rubrica .rubrica_container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    justify-content: start;
+}
+
+.rubrica_name, .rubrica_description, .rubrica_fecha {
+    text-align: start;
+}
+
+.btnClosePopover {
+    width: 100%;
+    padding: 1em;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition-duration: .2s;
+    transition-property: background-color, color;
+}
+
+.btnClosePopover:hover {
+    background-color: var(--colorEnfasis);
+    color: var(--colorWhite);
+}
+
+.asignada {
+    background-color: rgb(100, 198, 100);
+    color: white;
+}

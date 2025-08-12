@@ -13,11 +13,16 @@ let grupos = [];
 
 let gruposRubricas = [];
 
+let idRubricaEvaluada = null;
+
 window.criterios = [];
 
 const $selectGrupos = document.querySelector('#selectGrupos');
 
 const $buttonSaveEvaluacion = document.querySelector('#buttonSaveEvaluacion');
+
+const $buttonVolver = document.querySelector('#buttonVolver');
+
 
 
 
@@ -30,12 +35,14 @@ const showResumenData = async () => {
     document.querySelector('#nombreProfesorDashboard').textContent = profesor.nombre;
 
     rubricas = await recuperarRubricas();
+    if(rubricas.error === 'Sin datos') rubricas = [];
 
-    document.querySelector('#rubricasTotal').textContent = rubricas.length;
+    document.querySelector('#rubricasTotal').textContent = rubricas.length || 0;
 
     grupos = await recuperarGrupos();
-    
-    document.querySelector('#gruposTotal').textContent = grupos.length;
+    if(grupos.error === 'Sin datos') grupos = [];
+
+    document.querySelector('#gruposTotal').textContent = grupos.length || 0;
 
     document.querySelector('#estudiantesTotal').textContent = await recuperarTotalEstudiantes();
 
@@ -44,6 +51,12 @@ const showResumenData = async () => {
     renderRubricas();
 
 
+}
+
+const showWindow = (selector) => {
+    hiddenAllWindows();
+    const $window = document.querySelector(selector);
+    $window.classList.add('showWindow');
 }
 
 const validarRutaSegura = () => {
@@ -107,6 +120,32 @@ const renderRubricasRecientes = () => {
     });
 }
 
+const setEvaluacion = async (evaluacion) => {
+    const URL = `../api/setEvaluacion.php`;
+    const options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(evaluacion)
+    };
+
+    const response = await fetch(URL, options);
+    const data = await response.json();
+    return data;
+}
+
+const setProfesorEstudianteRubrica = async (data) => {
+    const URL = `../api/setProfesorEstudianteRubrica.php`;
+    const options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    };
+
+    const response = await fetch(URL, options);
+    const result = await response.json();
+    return result;
+}
+
 const renderRubricas = () => {
     const $containerRubricas = document.querySelector('#containerRubricas');
     $containerRubricas.innerHTML = '';
@@ -136,13 +175,12 @@ const recuperarGruposConRubricaAsignada = async (idRubrica) => {
     return data;
 }
 
-
 const renderOptionsGrupos = async (idRubrica) => {
     gruposRubricas = await recuperarGruposConRubricaAsignada(idRubrica);
     $selectGrupos.innerHTML = '<option disabled selected value="">Selecciona un grupo</option>';
     gruposRubricas.forEach(grupo => {
-        const {id, nombre} = grupo;
-        $selectGrupos.innerHTML += `<option value="${id}">${nombre}</option>`;
+        const {id} = grupo;
+        $selectGrupos.innerHTML += `<option value="${id}">${id}</option>`;
     });
 }
 
@@ -154,7 +192,7 @@ const renderOptionsEstudiantes = async () => {
         return;
     }
 
-    const estudiantes = await recuperarEstudiantes($selectGrupos.value);
+    const estudiantes = await recuperarEstudiantesSinEvaluar($selectGrupos.value, idRubricaEvaluada);
 
     $selectEstudiantes.innerHTML = '<option disabled selected value="">Selecciona un estudiante</option>';
     estudiantes.forEach(estudiante => {
@@ -187,9 +225,11 @@ const recuperarCriterios = async (idRubrica) => {
     return data;
 }
     
-window.evaluarRubrica = async (idRubrica) => {
+window.evaluarRubrica = async (idRubrica) => {  
     showWindowEvaluar();
-    
+
+    idRubricaEvaluada = idRubrica;
+
     const rubrica = rubricas.find(rubrica => rubrica.id == idRubrica);
     
     document.querySelector('#rubricaTitulo').textContent = rubrica.titulo;
@@ -205,94 +245,62 @@ window.evaluarRubrica = async (idRubrica) => {
     $containerQuestions.innerHTML = '';
 
     criterios.forEach((criterio, iterador) => {
-        const {ponderacion, titulo, descripcion_se, descripcion_e, descripcion_ae, descripcion_de} = criterio;
-        $containerQuestions.innerHTML += Criterio(iterador, ponderacion, titulo, descripcion_se, descripcion_e, descripcion_ae, descripcion_de);
+        const {id, ponderacion, titulo, descripcion_se, descripcion_e, descripcion_ae, descripcion_de} = criterio;
+        $containerQuestions.innerHTML += Criterio(id, iterador, ponderacion, titulo, descripcion_se, descripcion_e, descripcion_ae, descripcion_de);
     });
 }
 
-window.marcarCriterio = (iterador, valor) => {
+window.marcarCriterio = (idCriterio, iterador, valor) => {
     const $criterio = document.querySelector(`#criterio${iterador}`);
-    const $valor = document.querySelector(`#valor${iterador}`);
     const botones = $criterio.querySelectorAll('.question_buttonCalification');
 
-    // Limpiar botones previos
     botones.forEach(b => b.classList.remove('selected'));
 
-    const botonPresionado = $criterio.querySelector(`button[onclick="marcarCriterio(${iterador}, '${valor}')"]`);
+    const botonPresionado = $criterio.querySelector(`button[onclick="marcarCriterio('${idCriterio}', ${iterador}, '${valor}')"]`);
     if (botonPresionado) botonPresionado.classList.add('selected');
 
     $criterio.classList.add('bg-blue-100');
-
-    criterios[iterador].valor = parseInt(valor);
-
-    let puntajeTotal = 0;
-    criterios.forEach(criterio => {
-        if (criterio.valor !== null) {
-            const multiplicador = [1, 0.75, 0.5, 0.25][criterio.valor]; // según valor
-            puntajeTotal += criterio.ponderacion * multiplicador;
-        }
-    });
+    criterios[iterador].valor = valor;
 };
 
-window.guardarEvaluacion = () => {
-    let puntajeTotal = 0;
-    let sumaPonderaciones = 0;
-
-    criterios.forEach((criterio, index) => {
-        if (criterio.valor !== null) {
-            const multiplicador = [1, 0.75, 0.5, 0.25][criterio.valor];
-            puntajeTotal += criterio.ponderacion * multiplicador;
-        }
-
-        sumaPonderaciones += criterio.ponderacion;
-    });
-
-    if (sumaPonderaciones === 0) {
-        return;
-    }
-
-    const puntajeFinal = (puntajeTotal / sumaPonderaciones) * 100;
-
-    const evaluacion = {
-        id_profesor: profesor.id,
-        id_rubrica: rubricas.find(r => r.titulo === document.querySelector('#rubricaTitulo').textContent).id,
+window.guardarEvaluacion = async () => {
+    //Para la tabla evaluación
+    const respuestas = criterios.map(criterio => ({
+        id_criterio: criterio.id_criterio,
+        id_rubrica: idRubricaEvaluada,
         id_estudiante: document.querySelector('#selectEstudiantes').value,
-        puntaje: puntajeFinal
-    }
+        evaluacion: criterio.valor
+    }));
 
-    setEvaluacion(evaluacion);
+    //Para la tabla Profesor_Estudiante_Rubrica
+    const respuestasProfesorEstudiante = {
+        id_profesor: profesor.id,
+        id_estudiante: document.querySelector('#selectEstudiantes').value,
+        id_rubrica: idRubricaEvaluada
+    };
+
+    await setEvaluacion(respuestas);
+    await setProfesorEstudianteRubrica(respuestasProfesorEstudiante);
+
+    console.log('Respuestas a guardar:', respuestas);
+    console.log('Respuestas Profesor-Estudiante a guardar:', respuestasProfesorEstudiante);
+
+    showWindow('#MisRubricas');
+
 };
 
-const setEvaluacion = async (evaluacion) => {
-  try {
-    const respuesta = await fetch('../api/setEvaluacion.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(evaluacion)
-    });
+const recuperarEstudiantesSinEvaluar = async (id_grupo, id_rubrica) => {
+  const URL = '../api/getEstudiantesSinEvaluar.php';
+  const options = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id_grupo, id_rubrica }),
+  };
 
-    const datos = await respuesta.json();
-
-    if (datos.success) {
-      console.log("✅ Evaluación guardada correctamente:", datos.message);
-    } else {
-      console.error("❌ No se pudo guardar la evaluación:", datos.error);
-    }
-  } catch (error) {
-    console.error("💥 Error al enviar la evaluación:", error);
-  }
-}
-
-
-
-
-
-
-
-
-
+  const response = await fetch(URL, options);
+  const data = await response.json();
+  return data;
+};
 
 
 
@@ -308,6 +316,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
  $selectGrupos.addEventListener('change', async () => {
     await renderOptionsEstudiantes();
+});
+
+$buttonVolver.addEventListener('click', () => {
+    showWindow('#MisRubricas');
 });
 
 $buttonSaveEvaluacion.addEventListener('click', guardarEvaluacion);

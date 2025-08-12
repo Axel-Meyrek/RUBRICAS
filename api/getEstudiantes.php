@@ -7,7 +7,7 @@
 
     $query = /* MySql */
         "SELECT *
-        FROM Estudiantes
+        FROM G_Estudiantes
         WHERE id_grupo = '$id_grupo';";
 
 

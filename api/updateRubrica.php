@@ -18,7 +18,7 @@
     }
 
     // Preparamos el update con parámetros seguros
-    $stmt = $conexion->prepare("UPDATE Rubricas SET titulo = ?, descripcion = ? WHERE id = ?");
+    $stmt = $conexion->prepare("UPDATE G_Rubricas SET titulo = ?, descripcion = ? WHERE id = ?");
     $stmt->bind_param("ssi", $titulo, $descripcion, $id_rubrica);
 
     // Ejecutamos y respondemos

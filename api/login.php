@@ -9,7 +9,7 @@
     //VERIFICAR SI ES ADMINSIRADOR
     $queryAdmin = /* MySql */
         "SELECT id, nombre, email, password
-        FROM Administradores
+        FROM G_Administradores
         WHERE id = '$id' and password = '$password';";
 
     $resultadoAdmin = mysqli_query($conexion, $queryAdmin);
@@ -26,7 +26,7 @@
     //VERFICAR SI ES PROFESOR
     $queryProf = /* MySql */
         "SELECT id, nombre, email, password
-        FROM Profesores
+        FROM G_Profesores
         WHERE id = '$id' and password = '$password';";
 
     $resultadoProf = mysqli_query($conexion, $queryProf);

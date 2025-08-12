@@ -13,6 +13,8 @@ import CriterioEditable from "../components/CriterioEditable.js";
 
 import CriterioSimulado from "../components/CriterioSimulado.js";
 
+import RubricaParaAsignar from "../components/RubricaParaAsignar.js";
+
 let administrador = {};
 
 let rubricas = [];
@@ -23,19 +25,31 @@ let grupos = [];
 
 let idRubricaEditar = null;
 
+let rubricasSeleccionadasParaAsignar = [];
+
+let estudiantesSeleccionadosParaAsignar = [];
+
+const fondo = document.querySelector('#fondoPopover');
+
 const $fileInput = document.querySelector('#fileInput');
+
+const popover = document.querySelector('#popoverCentrado');
 
 const $selectGrupos = document.querySelector('#selectGrupos');
 
-const $btnCargarExcel = document.querySelector('#btnCargarExcel');
-
 const $btnAddCriterio = document.querySelector('#btnAddCriterio');
+
+const $btnCargarExcel = document.querySelector('#btnCargarExcel');
 
 const $btnSaveEditRubric = document.querySelector('#btnSaveEditRubric');
 
 const $btnAddCriterioEdit = document.querySelector('#btnAddCriterioEdit');
 
 const $buttonSaveNewRubrica = document.querySelector('#buttonSaveNewRubrica');
+
+const $btnClosePopover = document.querySelector('#btnClosePopover');
+
+
 
 /* FUNCIONES */
 
@@ -47,23 +61,38 @@ const showResumenData = async () => {
     
     document.querySelector('#nombreAdminDashboard').textContent = administrador.nombre;
 
-    rubricas = await recuperarRubricas();
+    rubricas = await recuperarRubricas() || [];
+    if (rubricas.error === 'Sin datos') rubricas = [];
 
-    document.querySelector('#rubricasTotal').textContent = rubricas.length;
-    
-    grupos = await recuperarGrupos();
-    
-    document.querySelector('#gruposTotal').textContent = grupos.length;
-    
-    profesores = await recuperarProfesores();
-    
-    document.querySelector('#profesoresTotal').textContent = profesores.length;
+    document.querySelector('#rubricasTotal').textContent = rubricas.length || 0;
 
-    renderRubricasRecientes();
+    grupos = await recuperarGrupos() || [];
+    if (grupos.error === 'Sin datos') grupos = [];
 
-    renderGrupos();
+    document.querySelector('#gruposTotal').textContent = grupos.length || 0;
 
-    renderRubricas();
+    profesores = await recuperarProfesores() || [];
+    if (profesores.error === 'Sin datos') profesores = [];
+
+    document.querySelector('#profesoresTotal').textContent = profesores.length || 0;
+
+    try {
+        renderRubricasRecientes();
+    } catch (error) {
+        console.error("Error al renderizar rúbricas recientes:", error);
+    }
+
+    try {
+        renderRubricas();
+    } catch (error) {
+        console.error("Error al renderizar opciones de grupos:", error);
+    }
+
+    try {
+        renderGrupos();
+    } catch (error) {
+        console.error("Error al renderizar grupos:", error);
+    }
 
 }
 
@@ -153,7 +182,7 @@ const enviarNuevaRubrica = async (titulo, descripcion) => {
     const response = await fetch(URL, options);
     const data = await response.json();
     return data;
-};
+}
 
 const enviarCriterios = async (criterios) => {
     const URL = '../api/setCriterios.php';
@@ -163,6 +192,48 @@ const enviarCriterios = async (criterios) => {
         headers: { 'Content-Type': 'application/json' }
     };
     await fetch(URL, options);
+}
+
+const enviarProfesores = async (profesores) => {
+    const URL = '../api/setProfesores.php';
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(profesores),
+        headers: { 'Content-Type': 'application/json' }
+    };
+    const response = await fetch(URL, options);
+}
+
+const enviarGrupos = async (grupos) => {
+    const URL = '../api/setGrupos.php';
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(grupos),
+        headers: { 'Content-Type': 'application/json' }
+    };
+    await fetch(URL, options);
+}
+
+const enviarEstudiantes = async (estudiantes) => {
+    const URL = '../api/setEstudiantes.php';
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(estudiantes),
+        headers: { 'Content-Type': 'application/json' }
+    };
+    await fetch(URL, options);
+}
+
+const setearRubricaConEstudiante = async (relaciones) => {
+    const URL = '../api/setRubricaEstudiante.php';
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(relaciones),
+        headers: { 'Content-Type': 'application/json' }
+    };
+
+    const response = await fetch(URL, options);
+    const data = await response.json();
 };
 
 const actualizarRubrica = async (id_rubrica, titulo, descripcion) => {
@@ -175,7 +246,7 @@ const actualizarRubrica = async (id_rubrica, titulo, descripcion) => {
     const response = await fetch(URL, options);
     const data = await response.json();
     return data;
-};
+}
 
 const actualizarCriterios = async (criterios) => {
     const URL = '../api/updateCriterios.php';
@@ -187,10 +258,16 @@ const actualizarCriterios = async (criterios) => {
     const response = await fetch(URL, options);
     const data = await response.json();
     return data;
-};
+}
 
 const renderRubricasRecientes = () => {
     const $resumenRubricaContainer = document.querySelector('#resumenRubricaContainer');
+    $resumenRubricaContainer.innerHTML = '';
+
+    if (rubricas.length === 0) {
+        $resumenRubricaContainer.innerHTML = '<p>No hay rúbricas recientes.</p>';
+        return;
+    }
 
     rubricas.slice(0, 2).forEach(rubrica => {
         const {titulo, fecha, id} = rubrica;
@@ -201,10 +278,15 @@ const renderRubricasRecientes = () => {
 const renderGrupos = () => {
     const $containerGrupos = document.querySelector('#containerGrupos');
     $containerGrupos.innerHTML = '';
-    
+
+    if (grupos.length === 0) {
+        $containerGrupos.innerHTML = '<p>No hay grupos disponibles.</p>';
+        return;
+    }
+
     grupos.forEach(grupo => {
-        const {id, nombre} = grupo;
-        $containerGrupos.innerHTML += Grupo(id, nombre);
+        const {id} = grupo;
+        $containerGrupos.innerHTML += Grupo(id);
     });
 }
 
@@ -233,7 +315,7 @@ const renderOptionsGrupos = async (idRubrica) => {
     $selectGrupos.innerHTML = '<option disabled selected value="">Selecciona un grupo</option>';
     grupos.forEach(grupo => {
         const {id, nombre} = grupo;
-        $selectGrupos.innerHTML += `<option value="${id}">${nombre}</option>`;
+        $selectGrupos.innerHTML += `<option value="${id}">${id}</option>`;
     });
 }
 
@@ -251,6 +333,15 @@ const renderOptionsEstudiantes = async () => {
     estudiantes.forEach(estudiante => {
         const {id, nombre} = estudiante;
         $selectEstudiantes.innerHTML += `<option value="${id}">${nombre}</option>`;
+    });
+}
+
+const renderRubricasParaAsignar = () => {
+    const $containerRubricSelect = document.querySelector('#containerRubricSelect');
+    $containerRubricSelect.innerHTML = '';
+    rubricas.forEach(rubrica => {
+        const {titulo, descripcion, fecha, id} = rubrica;
+        $containerRubricSelect.innerHTML += RubricaParaAsignar(titulo, descripcion, fecha, id);
     });
 }
 
@@ -430,24 +521,142 @@ const guardarRubricaEditada = async (idRubrica) => {
     showWindow('#MisRubricas');
 }
 
-const cargarExcel = e => {
+const mostrarPopover = () => {
+    popover.classList.remove('oculto');
+    fondo.classList.remove('oculto');
+    renderRubricasParaAsignar();
+}
+
+const cerrarPopover = () => {
+    popover.classList.add('oculto');
+    fondo.classList.add('oculto');
+}
+
+function obtenerPeriodo() {
+    const fecha = new Date();
+    const anio = fecha.getFullYear();
+    const mes = fecha.getMonth() + 1;
+
+    let estacion = null;
+
+    if (mes >= 3 && mes <= 5) {
+        estacion = 'Primavera';
+    } else if (mes >= 6 && mes <= 8) {
+        estacion = 'Verano';
+    } else if (mes >= 9 && mes <= 11) {
+        estacion = 'Otoño';
+    }
+
+    return estacion ? `${anio}_${estacion}` : `${anio}`;
+}
+
+const cargarExcel = async e => {
     const file = e.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (e) => {
-    const data = new Uint8Array(e.target.result);
-    const workbook = XLSX.read(data, { type: 'array' });
-    const sheetName = workbook.SheetNames[0];
-    const worksheet = workbook.Sheets[sheetName];
-    const json = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+    reader.onload = async (e) => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const json = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
 
-    console.log(json);
+
+        // Profesores únicos
+        const profesorSet = new Set();
+        const profesores = [];
+
+        json.forEach(prof => {
+            const idProfesor = prof['ID EVALUADOR'];
+            if (!profesorSet.has(idProfesor)) {
+                profesorSet.add(idProfesor);
+                profesores.push({
+                    id: idProfesor,
+                    nombre: prof['NOMBRE EVALUADOR'],
+                    email: prof['CORREO EVALUADOR'],
+                    password: 'prof123'
+                });
+            }
+        });
+
+        // Grupos únicos
+        const grupoSet = new Set();
+        const grupos = [];
+        const periodoGrupo = obtenerPeriodo();
+
+        json.forEach(grupo => {
+            const idGrupo = grupo['CLAVE MATERIA'] + '_' + grupo['GRUPO'] + '_' + periodoGrupo;
+            if (!grupoSet.has(idGrupo)) {
+                grupoSet.add(idGrupo);
+                grupos.push({
+                    id: idGrupo,
+                    periodo: periodoGrupo,
+                    id_profesor: grupo['ID EVALUADOR']
+                });
+            }
+        });
+
+        // Estudiantes (no se filtran aquí)
+        const estudiantes = json.map(estudiante => ({
+            id: estudiante['ID ALUMNO'],
+            matricula: estudiante['MATRÍCULA'],
+            nombre: estudiante['NOMBRE COMPLETO ALUMNO'],
+            id_grupo: estudiante['CLAVE MATERIA'] + '_' + estudiante['GRUPO'] + '_' + periodoGrupo
+        }));
+
+        try {
+            await enviarProfesores(profesores);
+        } catch (error) {
+            console.log('Error al enviar los profesores:', error);
+        }
+
+        try {
+            await enviarGrupos(grupos);
+        } catch (error) {
+            console.log('Error al enviar los grupos:', error);
+        }
+
+        try {
+            await enviarEstudiantes(estudiantes);
+        } catch (error) {
+            console.log('Error al enviar los estudiantes:', error);
+        }
+
+        estudiantesSeleccionadosParaAsignar = estudiantes.map(est => est.id);
+
     };
 
     reader.readAsArrayBuffer(file);
+    e.target.value = '';
+    mostrarPopover();
 }
 
+
+window.marcarRubricaComoAsignada = (idRubrica, boton) => {
+    if (rubricasSeleccionadasParaAsignar.includes(idRubrica)) {
+        rubricasSeleccionadasParaAsignar = rubricasSeleccionadasParaAsignar.filter(id => id !== idRubrica);
+        boton.classList.remove('asignada');
+        return;
+    }
+
+    rubricasSeleccionadasParaAsignar.push(idRubrica);
+    boton.classList.add('asignada');
+};
+
+const asignarRubricasAEstudiantes = async () => {
+    const relaciones = [];
+    for(let i = 0; i < estudiantesSeleccionadosParaAsignar.length; i++) {
+        for(let j = 0; j < rubricasSeleccionadasParaAsignar.length; j++){
+            const relacion = {
+                id_estudiante: estudiantesSeleccionadosParaAsignar[i],
+                id_rubrica: rubricasSeleccionadasParaAsignar[j]
+            };
+            relaciones.push(relacion);
+        }
+    }
+    setearRubricaConEstudiante(relaciones);
+}
 
 
 
@@ -472,6 +681,17 @@ $btnAddCriterioEdit.addEventListener('click', () => {
 
 $btnSaveEditRubric.addEventListener('click', () => {
    guardarRubricaEditada(idRubricaEditar);
+});
+
+$btnClosePopover.addEventListener('click', async () => {
+    cerrarPopover();
+    await asignarRubricasAEstudiantes();
+    grupos = await recuperarGrupos() || [];
+    renderGrupos();
+
+    rubricasSeleccionadasParaAsignar = [];
+    estudiantesSeleccionadosParaAsignar = [];
+    
 });
 
 $selectGrupos.addEventListener('change', renderOptionsEstudiantes);

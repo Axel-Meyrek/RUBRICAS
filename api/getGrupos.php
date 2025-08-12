@@ -1,7 +1,7 @@
 <?php
     require "connectionDataBase.php";
 
-    $query = "SELECT * FROM Grupos;";
+    $query = "SELECT * FROM G_Grupos;";
 
     $resultado = mysqli_query($conexion, $query);
 

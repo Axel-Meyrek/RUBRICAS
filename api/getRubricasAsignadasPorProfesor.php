@@ -6,13 +6,13 @@
     $id_profesor = $params["id_profesor"];
 
     $query = 
-        "SELECT DISTINCT Rubricas.id, Rubricas.titulo, Rubricas.descripcion, Rubricas.fecha
-        FROM Profesores
-        JOIN Grupos ON Profesores.id = Grupos.id_profesor
-        JOIN Estudiantes ON Grupos.id = Estudiantes.id_grupo
-        JOIN Rubrica_Estudiante ON Estudiantes.id = Rubrica_Estudiante.id_estudiante
-        JOIN Rubricas ON Rubrica_Estudiante.id_rubrica = Rubricas.id
-        WHERE Profesores.id = $id_profesor;";
+        "SELECT DISTINCT G_Rubricas.id, G_Rubricas.titulo, G_Rubricas.descripcion, G_Rubricas.fecha
+        FROM G_Profesores
+        JOIN G_Grupos ON G_Profesores.id = G_Grupos.id_profesor
+        JOIN G_Estudiantes ON G_Grupos.id = G_Estudiantes.id_grupo
+        JOIN G_Rubrica_Estudiante ON G_Estudiantes.id = G_Rubrica_Estudiante.id_estudiante
+        JOIN G_Rubricas ON G_Rubrica_Estudiante.id_rubrica = G_Rubricas.id
+        WHERE G_Profesores.id = $id_profesor;";
 
     $resultado = mysqli_query($conexion, $query);
 

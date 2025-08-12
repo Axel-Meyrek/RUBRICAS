@@ -6,11 +6,11 @@
     $id_profesor = $params["id_profesor"];
 
     $query = 
-        "SELECT count(Estudiantes.id) AS Total_Estudiantes
-        FROM Estudiantes
-        JOIN Grupos
-        ON Grupos.id = Estudiantes.id_grupo
-        WHERE Grupos.id_profesor = $id_profesor;";
+        "SELECT count(G_Estudiantes.id) AS Total_Estudiantes
+        FROM G_Estudiantes
+        JOIN G_Grupos
+        ON G_Grupos.id = G_Estudiantes.id_grupo
+        WHERE G_Grupos.id_profesor = $id_profesor;";
 
     $resultado = mysqli_query($conexion, $query);
 

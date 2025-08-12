@@ -5,7 +5,7 @@
 
     $id_profesor = $params["id_profesor"];
 
-    $query = "SELECT id, nombre, periodo FROM Grupos WHERE id_profesor = $id_profesor;";
+    $query = "SELECT id, periodo FROM G_Grupos WHERE id_profesor = $id_profesor;";
 
     $resultado = mysqli_query($conexion, $query);
 

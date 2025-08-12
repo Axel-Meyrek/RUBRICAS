@@ -6,7 +6,7 @@ const RubricaEvaluacionReciente = (titulo, fecha, id) => {
                     <h4 class="resumenRubrica_name">${titulo}</h4>
                     <p class="resumenRubrica_criterios">${fecha}</p>
                 </div>
-                <button onclick="evaluarRubrica(${id})" class="resumenRubrica_button">Evaluar</button>
+                <button onclick="evaluarRubrica('${id}')" class="resumenRubrica_button">Evaluar</button>
             </div>`
         );
 }

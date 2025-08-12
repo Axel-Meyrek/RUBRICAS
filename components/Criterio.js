@@ -1,9 +1,8 @@
-const Criterio = (iterador, ponderacion, titulo, descripcion_se, descripcion_e, descripcion_ae, descripcion_de) => {
-    // Guardamos la ponderación inicial (si no existe ya)
+const Criterio = (id, iterador, ponderacion, titulo, descripcion_se, descripcion_e, descripcion_ae, descripcion_de) => {
     if (!criterios[iterador]) {
         criterios[iterador] = {
-            ponderacion: parseFloat(ponderacion),
-            valor: null // aún no ha sido calificado
+            id_criterio: id, // guardamos el id real del criterio
+            valor: null
         };
     }
 
@@ -14,19 +13,19 @@ const Criterio = (iterador, ponderacion, titulo, descripcion_se, descripcion_e, 
             <div class="question_botonera">
                 <div class="question_flex">
                     <p class="question_description">${descripcion_se}</p>
-                    <button onclick="marcarCriterio(${iterador}, '0')" class="question_buttonCalification">Sobre el estándar</button>
+                    <button onclick="marcarCriterio('${id}', ${iterador}, 'Sobre el estándar')" class="question_buttonCalification">Sobre el estándar</button>
                 </div>
                 <div class="question_flex">
                     <p class="question_description">${descripcion_e}</p>
-                    <button onclick="marcarCriterio(${iterador}, '1')" class="question_buttonCalification">En el estándar</button>
+                    <button onclick="marcarCriterio('${id}', ${iterador}, 'En el estándar')" class="question_buttonCalification">En el estándar</button>
                 </div>
                 <div class="question_flex">
                     <p class="question_description">${descripcion_ae}</p>
-                    <button onclick="marcarCriterio(${iterador}, '2')" class="question_buttonCalification">Acercándose al estándar</button>
+                    <button onclick="marcarCriterio('${id}', ${iterador}, 'Acercándose al estándar')" class="question_buttonCalification">Acercándose al estándar</button>
                 </div>
                 <div class="question_flex">
                     <p class="question_description">${descripcion_de}</p>
-                    <button onclick="marcarCriterio(${iterador}, '3')" class="question_buttonCalification">Debajo del estándar</button>
+                    <button onclick="marcarCriterio('${id}', ${iterador}, 'Debajo del estándar')" class="question_buttonCalification">Debajo del estándar</button>
                 </div>
             </div>
         </article>`

@@ -1,7 +1,7 @@
 <?php
     require "connectionDataBase.php";
 
-    $query = "SELECT * FROM Rubricas;";
+    $query = "SELECT * FROM G_Rubricas;";
 
     $resultado = mysqli_query($conexion, $query);
 

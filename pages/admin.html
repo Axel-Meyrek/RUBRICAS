@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/misRubricas.css">
     <link rel="stylesheet" href="../css/completarRubrica.css">
     <link rel="stylesheet" href="../css/misEstudiantes.css">
+    <link rel="stylesheet" href="../css/popover.css">
     <!-- FUENTES -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -208,7 +209,7 @@
 
         <!-- SIMULAR RUBRICA -->
         <section id="CompletarRubrica" class="completarRubrica window">
-            <button class="completarRubrica_button">
+            <button onclick="showWindow('MisRubricas')" class="completarRubrica_button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 1024 1024"><path fill="currentColor" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64"/><path fill="currentColor" d="m237.248 512l265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312z"/></svg>
                 Volver a la lista
             </button>
@@ -290,6 +291,13 @@
 
             </article>
         </section>
+
+        <!-- POPOVER -->
+        <div id="fondoPopover" class="fondo oculto"></div>
+        <div id="popoverCentrado" class="popover oculto">
+            <div id="containerRubricSelect" class="containerRubricSelect"></div>
+            <button id="btnClosePopover" class="btnClosePopover">Listo</button>
+        </div>
         
     </main>
 

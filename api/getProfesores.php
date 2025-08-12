@@ -1,7 +1,7 @@
 <?php
     require "connectionDataBase.php";
 
-    $query = "SELECT * FROM Profesores;";
+    $query = "SELECT * FROM G_Profesores;";
 
     $resultado = mysqli_query($conexion, $query);
 

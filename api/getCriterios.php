@@ -5,9 +5,13 @@
 
     $id_rubrica = $params["id_rubrica"];
 
+    if ($id_rubrica === null) {
+        die("El ID de la rúbrica no fue proporcionado.");
+    }
+
     $query = /* MySql */
         "SELECT *
-        FROM Criterios
+        FROM G_Criterios
         WHERE id_rubrica = '$id_rubrica'";
 
 
