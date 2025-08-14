@@ -163,11 +163,11 @@ const showWindowEvaluar = () => {
     $window.classList.add('showWindow');
 }
 
-const recuperarGruposConRubricaAsignada = async (idRubrica) => {
-    const URL = '../api/gruposConRubricaAsignada.php';
+const recuperarGruposConRubricaAsignadaPorProfesor = async (idRubrica, idProfesor) => {
+    const URL = '../api/getGruposPorRubricaAsignadaPorProfesor.php';
     const options = {
         method: 'POST',
-        body: JSON.stringify({ id_rubrica: idRubrica }),
+        body: JSON.stringify({ id_rubrica: idRubrica, id_profesor: idProfesor }),
         headers: { 'Content-Type': 'application/json' }
     };
     const response = await fetch(URL, options);
@@ -175,8 +175,8 @@ const recuperarGruposConRubricaAsignada = async (idRubrica) => {
     return data;
 }
 
-const renderOptionsGrupos = async (idRubrica) => {
-    gruposRubricas = await recuperarGruposConRubricaAsignada(idRubrica);
+const renderOptionsGrupos = async (idRubrica, idProfesor) => {
+    gruposRubricas = await recuperarGruposConRubricaAsignadaPorProfesor(idRubrica, idProfesor);
     $selectGrupos.innerHTML = '<option disabled selected value="">Selecciona un grupo</option>';
     gruposRubricas.forEach(grupo => {
         const {id} = grupo;
@@ -235,7 +235,7 @@ window.evaluarRubrica = async (idRubrica) => {
     document.querySelector('#rubricaTitulo').textContent = rubrica.titulo;
     document.querySelector('#rubricaDescripcion').textContent = rubrica.descripcion;
 
-    await renderOptionsGrupos(idRubrica);
+    await renderOptionsGrupos(idRubrica, profesor.id);
 
     await renderOptionsEstudiantes();
     
@@ -323,3 +323,35 @@ $buttonVolver.addEventListener('click', () => {
 });
 
 $buttonSaveEvaluacion.addEventListener('click', guardarEvaluacion);
+
+
+
+const obtenerDatosYDescargarExcel = async () => {
+  try {
+    const response = await fetch("api/getEvaluaciones.php");
+    if (!response.ok) throw new Error("Error al obtener datos: " + response.statusText);
+    const datos = await response.json();
+
+    // Opcional: ajustar nombres de columnas para Excel
+    const datosParaExcel = datos.map(item => ({
+      Rubrica: item.rubrica,
+      Matricula: item.matricula,
+      "Id Estudiante": item.id_estudiante,
+      "Nombre Curso": item.nombre_curso,
+      "Nombre Estudiante": item.nombre_estudiante,
+      Criterio: item.criterio,
+      Respuesta: item.respuesta
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(datosParaExcel);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Evaluaciones");
+    XLSX.writeFile(workbook, "Evaluaciones.xlsx");
+  } catch (error) {
+    console.error("Error generando Excel:", error);
+  }
+}
+
+document.getElementById("btnDescargar").addEventListener("click", () => {
+  obtenerDatosYDescargarExcel();
+});
