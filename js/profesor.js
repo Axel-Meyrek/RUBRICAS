@@ -201,18 +201,6 @@ const renderOptionsEstudiantes = async () => {
     });
 }
 
-const recuperarEstudiantes = async (idGrupo) => {
-    const URL = '../api/getEstudiantes.php';
-    const options = {
-        method: 'POST',
-        body: JSON.stringify({id_grupo: idGrupo }),
-        headers: { 'Content-Type': 'application/json' }
-    };
-    const response = await fetch(URL, options);
-    const data = await response.json();
-    return data;
-}
-
 const recuperarCriterios = async (idRubrica) => {
     const URL = '../api/getCriterios.php';
     const options = {

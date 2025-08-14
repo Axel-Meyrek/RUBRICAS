@@ -100,6 +100,25 @@
     border: 1px solid rgba(128, 128, 128, 0.256);
     background-color: transparent;
     width: 100%;
+    display: flex;
+    gap: 1.5em;
+    align-items: center;
+}
+
+.question_icon {
+    width: 100%;
+    max-width: 100px;
+    color: #2b49a16e;
+    & path {
+        transition-duration: .1s;
+        transition-property: color;
+        width: 100%;
+        color: #2b49a16e;
+    }
+}
+
+.question_label {
+    color: inherit;
 }
 
 .question_buttonCalification:hover {
@@ -109,6 +128,14 @@
 .question_buttonCalification--active {
     background-color: var(--colorEnfasis);
     color: var(--colorWhite);
+}
+
+.selected .question_icon {
+    color: white;
+
+    & path {
+        color: white;
+    }
 }
 
 .question_saveResponses {
@@ -136,6 +163,12 @@
     scale: 1.01;
 }
 
+@media (width < 610px) {
+    .question_flex {
+        flex-direction: column;
+    }
+}
+
 @media (width < 540px) {
     .question_botonera {
         flex-wrap: wrap;
@@ -146,3 +179,4 @@
         max-width: none;
     }
 }
+
