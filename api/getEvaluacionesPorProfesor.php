@@ -1,6 +1,14 @@
 <?php
 require "connectionDataBase.php";
 
+// Leer parámetros JSON
+$params = json_decode(file_get_contents("php://input"), true);
+$id_profesor = $params["id_profesor"];
+
+if ($id_profesor === null) {
+    die(json_encode(["error" => "El ID del profesor no fue proporcionado."]));
+}
+
 // ==========================================
 // Paso 0: eliminar tabla temporal si existe
 // ==========================================
@@ -24,6 +32,7 @@ JOIN G_Estudiantes AS E ON PER.id_estudiante = E.id
 JOIN G_Rubricas AS R ON R.id = PER.id_rubrica
 JOIN G_Evaluaciones AS EV ON EV.id_estudiante = E.id
 JOIN G_Criterios AS C ON EV.id_Criterio = C.id
+WHERE PER.id_profesor = '$id_profesor'
 ";
 
 $conexion->query($createTemp);

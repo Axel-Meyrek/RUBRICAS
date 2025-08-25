@@ -23,6 +23,8 @@ const $buttonSaveEvaluacion = document.querySelector('#buttonSaveEvaluacion');
 
 const $buttonVolver = document.querySelector('#buttonVolver');
 
+const $btnDescargarExcel = document.querySelector('#btnDescargarExcel');
+
 
 
 
@@ -108,6 +110,20 @@ const recuperarRubricas = async () => {
 
     const response = await fetch(URL, options);
     const data = await response.json();
+    return data;
+}
+
+const recuperarEvaluaciones = async () => {
+    const URL = `../api/getEvaluacionesPorProfesor.php`;
+    const options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id_profesor: profesor.id})
+    };
+    
+    const response = await fetch(URL, options);
+    const data = await response.json();
+    console.log(data);
     return data;
 }
 
@@ -290,7 +306,39 @@ const recuperarEstudiantesSinEvaluar = async (id_grupo, id_rubrica) => {
   return data;
 };
 
+const descargarEvaluacionesExcel = async () => {
+    const response = await recuperarEvaluaciones();
+    const data = response.data;
 
+    if (!data || data.length === 0) return;
+
+    const excelData = data.map(estudiante => {
+        const fila = {
+            Rubrica: estudiante.Rubrica,
+            Matricula: estudiante.Matricula,
+            ID: estudiante.ID,
+            Nombre: estudiante.Nombre
+        };
+
+        Object.keys(estudiante).forEach(key => {
+            if (key.startsWith("Criterio") || key.startsWith("Calificacion")) {
+                fila[key] = estudiante[key];
+            }
+        });
+
+        return fila;
+    });
+
+    // Crear hoja de Excel
+    const ws = XLSX.utils.json_to_sheet(excelData);
+
+    // Crear libro de Excel
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Rúbricas");
+
+    // Descargar archivo
+    XLSX.writeFile(wb, "Evaluaciones.xlsx");
+};
 
 //EVENTOS
 document.addEventListener('DOMContentLoaded', () => {
@@ -312,34 +360,4 @@ $buttonVolver.addEventListener('click', () => {
 
 $buttonSaveEvaluacion.addEventListener('click', guardarEvaluacion);
 
-
-
-const obtenerDatosYDescargarExcel = async () => {
-  try {
-    const response = await fetch("api/getEvaluaciones.php");
-    if (!response.ok) throw new Error("Error al obtener datos: " + response.statusText);
-    const datos = await response.json();
-
-    // Opcional: ajustar nombres de columnas para Excel
-    const datosParaExcel = datos.map(item => ({
-      Rubrica: item.rubrica,
-      Matricula: item.matricula,
-      "Id Estudiante": item.id_estudiante,
-      "Nombre Curso": item.nombre_curso,
-      "Nombre Estudiante": item.nombre_estudiante,
-      Criterio: item.criterio,
-      Respuesta: item.respuesta
-    }));
-
-    const worksheet = XLSX.utils.json_to_sheet(datosParaExcel);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Evaluaciones");
-    XLSX.writeFile(workbook, "Evaluaciones.xlsx");
-  } catch (error) {
-    console.error("Error generando Excel:", error);
-  }
-}
-
-document.getElementById("btnDescargar").addEventListener("click", () => {
-  obtenerDatosYDescargarExcel();
-});
+$btnDescargarExcel.addEventListener('click', descargarEvaluacionesExcel);

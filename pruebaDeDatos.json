@@ -1,0 +1,18 @@
+{
+    "nombreRubrica": "Rubrica de Ejemplo",
+    "matricula": "123456",
+    "id": "1",
+    "nombre": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "fechaDeIntento": "2023-10-01",
+    "criterios" : [
+        {
+            "tituloCriterio": "Criterio 1",
+            "respuesta": "Respuesta del Criterio 1"
+        },
+        {
+            "tituloCriterio": "Criterio 2",
+            "respuesta": "Respuesta del Criterio 2"
+        }
+    ]
+}
